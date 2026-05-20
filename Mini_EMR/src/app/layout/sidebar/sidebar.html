@@ -1,0 +1,49 @@
+<div class="sidebar">
+
+  <!-- Logo -->
+  <div class="sidebar-logo">
+    <h1>MiniEMR</h1>
+    <p>Outpatient System</p>
+  </div>
+
+  <!-- Navigation Links -->
+  <mat-nav-list class="nav-list">
+
+    <a mat-list-item
+       routerLink="/dashboard"
+       routerLinkActive="active-link">
+      <mat-icon matListItemIcon>dashboard</mat-icon>
+      <span matListItemTitle>Dashboard</span>
+    </a>
+
+    <a mat-list-item
+       routerLink="/patients"
+       routerLinkActive="active-link">
+      <mat-icon matListItemIcon>people</mat-icon>
+      <span matListItemTitle>Patients</span>
+    </a>
+
+    <a mat-list-item
+       routerLink="/appointments"
+       routerLinkActive="active-link">
+      <mat-icon matListItemIcon>calendar_month</mat-icon>
+      <span matListItemTitle>Appointments</span>
+    </a>
+
+  </mat-nav-list>
+
+  <!-- User Card Bottom -->
+  <div class="user-card">
+    <div class="user-avatar">
+      {{ fullName?.charAt(0) }}
+    </div>
+    <div class="user-info">
+      <span class="name">{{ fullName }}</span>
+      <span class="role">{{ role }}</span>
+    </div>
+    <button mat-icon-button (click)="logout()" class="logout-btn">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+
+</div>

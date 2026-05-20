@@ -1,0 +1,21 @@
+<mat-toolbar class="navbar">
+
+  <!-- Left: Page Title -->
+  <div class="navbar-left">
+    <h2 class="page-title">{{ pageTitle$ }}</h2>
+  </div>
+
+  <!-- Right: User Info -->
+  <div class="navbar-right">
+    <div class="user-info">
+      <div class="user-avatar">
+        {{ fullName?.charAt(0) }}
+      </div>
+      <div class="user-details">
+        <span class="name">{{ fullName }}</span>
+        <span class="role">{{ role }}</span>
+      </div>
+    </div>
+  </div>
+
+</mat-toolbar>

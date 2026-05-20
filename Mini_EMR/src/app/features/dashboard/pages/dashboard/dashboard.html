@@ -1,0 +1,158 @@
+<div class="dashboard-container">
+
+    @if(statusCounts())
+    {
+    <div class="stats-container">
+
+        <mat-card class="stat-card total">
+            <div class="stat-icon"><mat-icon>calendar_today</mat-icon></div>
+            <div class="stat-info">
+                <p class="stat-value">{{ statusCounts()?.total }}</p>
+                <h3 class="stat-label">Total</h3>
+            </div>
+        </mat-card>
+
+        <mat-card class="stat-card booked">
+            <div class="stat-icon"><mat-icon>event_available</mat-icon></div>
+            <div class="stat-info">
+                <p class="stat-value">{{ statusCounts()?.booked }}</p>
+                <h3 class="stat-label">Booked</h3>
+            </div>
+        </mat-card>
+
+        <mat-card class="stat-card checkedin">
+            <div class="stat-icon"><mat-icon>how_to_reg</mat-icon></div>
+            <div class="stat-info">
+                <p class="stat-value">{{ statusCounts()?.checkedIn }}</p>
+                <h3 class="stat-label">Checked In</h3>
+            </div>
+        </mat-card>
+
+        <mat-card class="stat-card completed">
+            <div class="stat-icon"><mat-icon>task_alt</mat-icon></div>
+            <div class="stat-info">
+                <p class="stat-value">{{ statusCounts()?.completed }}</p>
+                <h3 class="stat-label">Completed</h3>
+            </div>
+        </mat-card>
+
+    </div>
+    }
+
+    @if(authService.isDoctor())
+    {
+    <mat-card class="doctor-card">
+        <div class="doctor-card-header">
+            <mat-icon>medical_services</mat-icon>
+            <h3>My Appointments Today</h3>
+        </div>
+        @for(item of doctorAppointments(); track item.id)
+        {
+        <div class="doctor-appointment-item">
+            <mat-icon class="item-icon">person</mat-icon>
+            <span class="item-name">{{ item.patientName }}</span>
+            <span class="status-badge status-{{ item.status | lowercase }}">{{ item.status }}</span>
+        </div>
+        }
+    </mat-card>
+    }
+
+    <mat-card class="filters-card">
+        <div class="filters-container">
+
+            <mat-form-field appearance="outline">
+                <mat-label>Select Date</mat-label>
+                <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" (dateChange)="onFilterChange()">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Status</mat-label>
+                <mat-select [(ngModel)]="selectedStatus" (selectionChange)="onFilterChange()">
+                    <mat-option value="">All</mat-option>
+                    <mat-option value="Booked">Booked</mat-option>
+                    <mat-option value="CheckedIn">CheckedIn</mat-option>
+                    <mat-option value="Completed">Completed</mat-option>
+                    <mat-option value="Cancelled">Cancelled</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+    </mat-card>
+
+    <mat-card class="table-card">
+        <table mat-table [dataSource]="appointments()">
+
+            <ng-container matColumnDef="patient">
+                <th mat-header-cell *matHeaderCellDef>Patient</th>
+                <td mat-cell *matCellDef="let row">{{ row.patientName }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="ageGender">
+                <th mat-header-cell *matHeaderCellDef>Age / Gender</th>
+                <td mat-cell *matCellDef="let row">{{ row.age }}y · {{ row.gender }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="doctor">
+                <th mat-header-cell *matHeaderCellDef>Doctor</th>
+                <td mat-cell *matCellDef="let row">{{ row.doctorName }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="dateTime">
+                <th mat-header-cell *matHeaderCellDef>Time</th>
+                <td mat-cell *matCellDef="let row">{{ row.appointmentDateTime | date:'short' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let row">
+                    <span class="status-badge status-{{ row.status | lowercase }}">
+                        {{ row.status }}
+                    </span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="d-flex gap-2">
+
+                        @if(row.status === 'Booked')
+                        {
+                        <button mat-raised-button color="primary" (click)="checkIn(row.id)">
+                            Check In
+                        </button>
+                        <button mat-raised-button color="warn" (click)="cancel(row.id)">
+                            Cancel
+                        </button>
+                        }
+
+                        @if(row.status === 'CheckedIn')
+                        {
+                        <button mat-raised-button color="accent" (click)="startVisit(row.id)">
+                            Start Visit
+                        </button>
+                        <button mat-raised-button color="warn" (click)="cancel(row.id)">
+                            Cancel
+                        </button>
+                        }
+
+                        @if(row.status === 'Completed')
+                        {
+                        <button mat-raised-button color="primary">
+                            View
+                        </button>
+                        }
+
+                    </div>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        </table>
+    </mat-card>
+
+</div>

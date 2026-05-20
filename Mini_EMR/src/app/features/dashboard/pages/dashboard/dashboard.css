@@ -1,0 +1,232 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Stats */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.stat-card {
+    padding: 20px 24px !important;
+    display: flex !important;
+    align-items: center;
+    gap: 16px;
+    border-radius: 12px !important;
+    border-left: 4px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1) !important;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.stat-icon mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    color: #fff;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+    margin: 4px 0 0;
+}
+
+.stat-card.total    { border-left-color: #6366f1; }
+.stat-card.booked   { border-left-color: #3b82f6; }
+.stat-card.checkedin{ border-left-color: #f59e0b; }
+.stat-card.completed{ border-left-color: #10b981; }
+
+.stat-card.total     .stat-icon { background: #6366f1; }
+.stat-card.booked    .stat-icon { background: #3b82f6; }
+.stat-card.checkedin .stat-icon { background: #f59e0b; }
+.stat-card.completed .stat-icon { background: #10b981; }
+
+.stat-card.total     .stat-value { color: #6366f1; }
+.stat-card.booked    .stat-value { color: #3b82f6; }
+.stat-card.checkedin .stat-value { color: #f59e0b; }
+.stat-card.completed .stat-value { color: #10b981; }
+
+/* Doctor Card */
+.doctor-card {
+    padding: 20px 24px !important;
+    border-radius: 12px !important;
+    border: 1px solid #c4b5fd;
+    background: #faf5ff !important;
+}
+
+.doctor-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.doctor-card-header mat-icon {
+    color: #6366f1;
+}
+
+.doctor-card-header h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin: 0;
+}
+
+.doctor-appointment-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #ede9fe;
+}
+
+.doctor-appointment-item:last-child {
+    border-bottom: none;
+}
+
+.item-icon {
+    color: #8b5cf6;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+.item-name {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 500;
+    color: #1a1a2e;
+}
+
+/* Filters */
+.filters-card {
+    padding: 16px 24px !important;
+    border-radius: 12px !important;
+}
+
+.filters-container {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.filters-container mat-form-field {
+    margin-bottom: -1.25em;
+}
+
+/* Table */
+.table-card {
+    border-radius: 12px !important;
+    overflow: hidden;
+    padding: 0 !important;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-mdc-header-cell {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    color: #6b7280 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: #f9fafb !important;
+}
+
+.mat-mdc-cell {
+    font-size: 13px;
+    color: #374151;
+    padding: 14px !important;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+    background: #fafafa;
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+.status-booked {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.status-checkedin {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-completed {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status-cancelled {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* Buttons */
+button {
+    margin-right: 6px !important;
+    margin-bottom: 4px !important;
+    font-size: 12px !important;
+}
+
+button mat-icon {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+    margin-right: 4px;
+}
+
+@media (max-width: 768px) {
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .filters-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    button {
+        font-size: 11px !important;
+        padding: 4px 8px !important;
+    }
+}
