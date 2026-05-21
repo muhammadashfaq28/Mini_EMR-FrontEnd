@@ -1,1 +1,187 @@
-<p>patients works!</p>
+<div class="patients-container">
+
+    <!-- Search + Button -->
+
+    <div class="top-bar">
+
+        <!-- Search -->
+
+        <mat-form-field
+            appearance="outline"
+            class="search-field">
+
+            <mat-label>
+                Search Patient
+            </mat-label>
+
+            <input
+                matInput
+                [(ngModel)]="searchText"
+                (input)="onSearch()"
+                placeholder="Name, CNIC or Phone">
+
+            <mat-icon matSuffix>
+                search
+            </mat-icon>
+
+        </mat-form-field>
+
+        <!-- Add Button -->
+
+        <button
+            mat-raised-button
+            color="primary"
+            (click)="addPatient()">
+
+            <mat-icon>
+                add
+            </mat-icon>
+
+            Add Patient
+
+        </button>
+
+    </div>
+
+    <!-- Table -->
+
+    <mat-card class="table-card">
+
+        <table
+            mat-table
+            [dataSource]="filteredPatients()">
+
+            <!-- Name -->
+
+            <ng-container matColumnDef="name">
+
+                <th mat-header-cell *matHeaderCellDef>
+                    Patient
+                </th>
+
+                <td mat-cell *matCellDef="let row">
+
+                    <div class="patient-name">
+
+                        {{ row.firstName }}
+                        {{ row.lastName }}
+
+                    </div>
+
+                </td>
+
+            </ng-container>
+
+            <!-- Gender -->
+
+            <ng-container matColumnDef="gender">
+
+                <th mat-header-cell *matHeaderCellDef>
+                    Gender
+                </th>
+
+                <td mat-cell *matCellDef="let row">
+
+                    {{ row.gender }}
+
+                </td>
+
+            </ng-container>
+
+            <!-- Phone -->
+
+            <ng-container matColumnDef="phone">
+
+                <th mat-header-cell *matHeaderCellDef>
+                    Phone
+                </th>
+
+                <td mat-cell *matCellDef="let row">
+
+                    {{ row.phoneNumber }}
+
+                </td>
+
+            </ng-container>
+
+            <!-- CNIC -->
+
+            <ng-container matColumnDef="cnic">
+
+                <th mat-header-cell *matHeaderCellDef>
+                    CNIC
+                </th>
+
+                <td mat-cell *matCellDef="let row">
+
+                    {{ row.cnic }}
+
+                </td>
+
+            </ng-container>
+
+            <!-- Actions -->
+
+            <ng-container matColumnDef="actions">
+
+                <th mat-header-cell *matHeaderCellDef>
+                    Actions
+                </th>
+
+                <td mat-cell *matCellDef="let row">
+
+                    <div class="action-buttons">
+
+                        <!-- View -->
+
+                        <button
+                            mat-icon-button
+                            color="primary"
+                            (click)="viewPatient(row.id)">
+
+                            <mat-icon>
+                                visibility
+                            </mat-icon>
+
+                        </button>
+
+                        <!-- Edit -->
+
+                        <button
+                            mat-icon-button
+                            color="accent"
+                            (click)="editPatient(row)">
+
+                            <mat-icon>
+                                edit
+                            </mat-icon>
+
+                        </button>
+
+                    </div>
+
+                </td>
+
+            </ng-container>
+
+            <!-- Header -->
+
+            <tr
+                mat-header-row
+                *matHeaderRowDef="displayedColumns">
+            </tr>
+
+            <!-- Rows -->
+
+            <tr
+                mat-row
+                *matRowDef="
+                    let row;
+                    columns: displayedColumns">
+            </tr>
+
+        </table>
+
+    </mat-card>
+
+</div>

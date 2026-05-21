@@ -1,0 +1,54 @@
+<h2 mat-dialog-title class="text-center fw-bold fs-5 pt-3">
+    Edit Patient
+</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="patientForm" class="patient-form">
+
+        <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Gender</mat-label>
+            <mat-select formControlName="gender">
+                <mat-option value="Male">Male</mat-option>
+                <mat-option value="Female">Female</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>CNIC</mat-label>
+            <input matInput formControlName="cnic">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Phone Number</mat-label>
+            <input matInput formControlName="phoneNumber">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Blood Group</mat-label>
+            <input matInput formControlName="bloodGroup">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Address</mat-label>
+            <textarea matInput rows="3" formControlName="address"></textarea>
+        </mat-form-field>
+
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="d-flex justify-content-end gap-2 px-3 pb-3">
+    <button mat-button (click)="close()">Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="isSaving" (click)="update()">
+        Update Patient
+    </button>
+</mat-dialog-actions>

@@ -1,0 +1,66 @@
+<h2 mat-dialog-title class="text-center fw-bold fs-5 pt-3">Book Appointment</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="appointmentForm" class="appointment-form">
+
+        <!-- Patient -->
+        <mat-form-field appearance="outline">
+            <mat-label>Patient</mat-label>
+            <mat-select formControlName="patientId">
+                <mat-option>
+                    <ngx-mat-select-search [(ngModel)]="patientSearch" [ngModelOptions]="{ standalone: true }"
+                        placeholderLabel="Search patient" (keyup)="onPatientSearch()">
+                    </ngx-mat-select-search>
+                </mat-option>
+                @for(patient of filteredPatients(); track patient.id) {
+                <mat-option [value]="patient.id">
+                    {{ patient.firstName }} {{ patient.lastName }}
+                </mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <!-- Doctor -->
+        <mat-form-field appearance="outline">
+            <mat-label>Doctor</mat-label>
+            <mat-select formControlName="doctorId">
+                <mat-option>
+                    <ngx-mat-select-search [(ngModel)]="doctorSearch" [ngModelOptions]="{ standalone: true }"
+                        placeholderLabel="Search doctor" (keyup)="onDoctorSearch()">
+                    </ngx-mat-select-search>
+                </mat-option>
+                @for(doctor of filteredDoctors(); track doctor.id) {
+                <mat-option [value]="doctor.id">{{ doctor.fullName }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <!-- Date -->
+        <mat-form-field appearance="outline">
+            <mat-label>Appointment Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="appointmentDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <!-- Time -->
+        <mat-form-field appearance="outline">
+            <mat-label>Appointment Time</mat-label>
+            <input matInput type="time" formControlName="appointmentTime">
+        </mat-form-field>
+
+        <!-- Notes -->
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Notes</mat-label>
+            <textarea matInput rows="3" formControlName="notes"></textarea>
+        </mat-form-field>
+
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="d-flex justify-content-end gap-2 px-3 pb-3">
+    <button mat-button (click)="close()">Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="isSaving" (click)="save()">
+        Book Appointment
+    </button>
+</mat-dialog-actions>

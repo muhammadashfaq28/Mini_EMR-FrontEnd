@@ -1,0 +1,39 @@
+.patient-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 10px;
+}
+
+.full-width {
+    grid-column: span 2;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+mat-dialog-content {
+    min-width: 500px;
+    padding-top: 10px;
+}
+
+button[mat-raised-button] {
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    padding: 0 20px !important;
+}
+
+@media (max-width: 768px) {
+    .patient-form {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: span 1;
+    }
+
+    mat-dialog-content {
+        min-width: 100%;
+    }
+}

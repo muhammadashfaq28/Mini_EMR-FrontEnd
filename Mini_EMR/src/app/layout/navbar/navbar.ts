@@ -1,37 +1,45 @@
 import { Component, inject } from '@angular/core';
-import { AuthService } from '../../core/services/auth.service';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter, map, startWith } from 'rxjs';
-import { MatToolbarModule, MatToolbar } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../core/services/auth.service';
+import { BookAppointmentDialog } from '../../features/appointments/dialogs/book-appointment-dialog/book-appointment-dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-navbar',
-  imports: [MatToolbar],
+
+  standalone: true,
+
+  imports: [
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule
+  ],
   templateUrl: './navbar.html',
-  styleUrl: './navbar.css',
+  styleUrl: './navbar.css'
 })
 export class Navbar {
-
   authService = inject(AuthService);
-  router = inject(Router);
+  private dialog = inject(MatDialog);
+  private router = inject(Router);
 
-  fullName = this.authService.getFullName();
-  role = this.authService.getRole();
+  openBookAppointment(): void {
+    const dialogRef =
+      this.dialog.open(
+        BookAppointmentDialog,
+        {
+          width: '95%',
+          maxWidth: '800px',
+          disableClose: true
+        });
 
-  pageTitle$ = this.router.events.pipe(
-    filter(e => e instanceof NavigationEnd),
-    map(() => this.getTitle()),
-    startWith(this.getTitle())  // ✅ yeh add karo
-);
-
-getTitle(): string {
-    const url = this.router.url;
-    if (url.includes('dashboard')) return 'Dashboard';
-    if (url.includes('patients')) return 'Patients';
-    if (url.includes('appointments')) return 'Appointments';
-    if (url.includes('visits')) return 'Visit Form';
-    return 'MiniEMR';
-}
-
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (result) {
+          window.location.reload();
+        }
+      });
+  }
 }

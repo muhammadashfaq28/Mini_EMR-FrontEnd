@@ -1,49 +1,103 @@
-<div class="sidebar">
+<div class="sidebar-container">
 
-  <!-- Logo -->
-  <div class="sidebar-logo">
-    <h1>MiniEMR</h1>
-    <p>Outpatient System</p>
+  <!-- ===================== TOP ===================== -->
+
+  <div class="sidebar-top">
+
+    <!-- LOGO -->
+
+    <div class="logo-section">
+
+      <img
+        src="https://www.curemd.com/cmd/cmd-assets/images/lodar.gif"
+        alt="Mini EMR Logo"
+        class="logo-image">
+
+      <div class="logo-text">
+        Mini EMR
+      </div>
+
+    </div>
+
+    <!-- MENU -->
+
+    <div class="menu-section">
+
+      <!-- Dashboard -->
+
+      <a
+        mat-list-item
+        routerLink="/dashboard"
+        routerLinkActive="active-link">
+
+        <mat-icon>dashboard</mat-icon>
+
+        <span>Dashboard</span>
+
+      </a>
+
+      <!-- Patients -->
+
+      <a
+        mat-list-item
+        routerLink="/patients"
+        routerLinkActive="active-link">
+
+        <mat-icon>groups</mat-icon>
+
+        <span>Patients</span>
+
+      </a>
+
+      <!-- Appointments -->
+
+      <a
+        mat-list-item
+        routerLink="/appointments"
+        routerLinkActive="active-link">
+
+        <mat-icon>event</mat-icon>
+
+        <span>Appointments</span>
+
+      </a>
+
+      <!-- Visits -->
+
+      @if(authService.isDoctor())
+      {
+        <a
+          mat-list-item
+          routerLink="/visits"
+          routerLinkActive="active-link">
+
+          <mat-icon>medical_services</mat-icon>
+
+          <span>Visits</span>
+
+        </a>
+      }
+
+    </div>
+
   </div>
 
-  <!-- Navigation Links -->
-  <mat-nav-list class="nav-list">
+  <!-- ===================== FOOTER ===================== -->
 
-    <a mat-list-item
-       routerLink="/dashboard"
-       routerLinkActive="active-link">
-      <mat-icon matListItemIcon>dashboard</mat-icon>
-      <span matListItemTitle>Dashboard</span>
-    </a>
+  <div class="sidebar-footer">
 
-    <a mat-list-item
-       routerLink="/patients"
-       routerLinkActive="active-link">
-      <mat-icon matListItemIcon>people</mat-icon>
-      <span matListItemTitle>Patients</span>
-    </a>
+    <button
+      mat-raised-button
+      color="warn"
+      class="logout-btn"
+      (click)="logout()">
 
-    <a mat-list-item
-       routerLink="/appointments"
-       routerLinkActive="active-link">
-      <mat-icon matListItemIcon>calendar_month</mat-icon>
-      <span matListItemTitle>Appointments</span>
-    </a>
-
-  </mat-nav-list>
-
-  <!-- User Card Bottom -->
-  <div class="user-card">
-    <div class="user-avatar">
-      {{ fullName?.charAt(0) }}
-    </div>
-    <div class="user-info">
-      <span class="name">{{ fullName }}</span>
-      <span class="role">{{ role }}</span>
-    </div>
-    <button mat-icon-button (click)="logout()" class="logout-btn">
       <mat-icon>logout</mat-icon>
+
+      Logout
+
     </button>
+
   </div>
 
 </div>

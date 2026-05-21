@@ -49,9 +49,70 @@
         @for(item of doctorAppointments(); track item.id)
         {
         <div class="doctor-appointment-item">
-            <mat-icon class="item-icon">person</mat-icon>
-            <span class="item-name">{{ item.patientName }}</span>
-            <span class="status-badge status-{{ item.status | lowercase }}">{{ item.status }}</span>
+
+            <!-- LEFT -->
+
+            <div class="appointment-left">
+
+                <mat-icon class="item-icon">
+                    person
+                </mat-icon>
+
+                <div class="appointment-info">
+
+                    <div class="item-name">
+                        {{ item.patientName }}
+                    </div>
+
+                    <div class="appointment-time">
+
+                        {{ item.appointmentDateTime
+                        | date:'shortTime' }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+
+            <div class="appointment-actions">
+
+                <span class="status-badge
+            status-{{ item.status | lowercase }}">
+
+                    {{ item.status }}
+
+                </span>
+
+                <!-- BOOKED -->
+
+                @if(item.status === 'Booked')
+                {
+                <button mat-raised-button color="primary" class="small-btn" (click)="checkIn(item.id)">
+
+                    Check In
+
+                </button>
+                }
+
+                <!-- CHECKED IN -->
+
+                @if(item.status === 'CheckedIn')
+                {
+                <button mat-raised-button color="accent" class="small-btn" (click)="startVisit(item.id)">
+
+                    Start Visit
+
+                </button>
+                <button mat-raised-button color="warn" (click)="cancel(item.id)">
+                    Cancel
+                </button>
+                }
+
+            </div>
+
         </div>
         }
     </mat-card>

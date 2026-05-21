@@ -37,6 +37,10 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
+  ngOnInit(): void {
+    this.authService.logout();
+  }
+
   isLoading = false;
   errorMessage = '';
   hidePassword = true;
@@ -57,8 +61,18 @@ export class LoginComponent {
 
     this.authApiService.login(this.loginForm.value).subscribe({
       next: (response: any) => {
-        this.authService.setToken(response.token);
-        this.router.navigate(['/dashboard']);
+        this.authService.setToken(
+          response.token);
+
+        this.authService.setRole(
+          response.role);
+
+        this.authService.setFullName(
+          response.fullName);
+
+        this.router.navigate([
+          '/dashboard'
+        ]);
         this.isLoading = false;
       },
       error: () => {

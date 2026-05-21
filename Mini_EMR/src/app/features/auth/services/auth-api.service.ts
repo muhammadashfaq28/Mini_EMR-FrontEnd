@@ -11,14 +11,13 @@ export class AuthApiService {
   private apiUrl =
     `${environment.apiUrl}/auth`;
 
-  constructor(private http: HttpClient)
-  {
+  constructor(private http: HttpClient) {
   }
 
-  login(model: any)
-  {
-    return this.http.post(
-      `${this.apiUrl}/login`,
-      model);
+  login(model: any) {
+    return this.http.post(`${this.apiUrl}/login`, model);
+  }
+  getDoctors() {
+    return this.http.get(`${this.apiUrl}/doctors`);
   }
 }

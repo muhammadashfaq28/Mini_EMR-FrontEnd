@@ -27,6 +27,9 @@ export class DashboardService {
   getDoctorTodayAppointments(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/appointments/doctor/today`);
   }
+  bookAppointment(model: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/appointments`,model);
+  }
 
   checkInAppointment(id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/appointments/${id}/checkin`, {});
@@ -38,6 +41,6 @@ export class DashboardService {
 }
 
 
-  
+
 
 

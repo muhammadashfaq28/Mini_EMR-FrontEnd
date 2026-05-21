@@ -70,11 +70,7 @@ export class Dashboard implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.loadDashboardData();
-
-    if (this.authService.isDoctor()) {
-      this.loadDoctorAppointments();
-    }
+    this.refreshDashboard();
   }
 
   loadDashboardData(): void {
@@ -106,18 +102,34 @@ export class Dashboard implements OnInit {
     this.loadDashboardData();
   }
 
+  refreshDashboard(): void {
+    this.loadDashboardData();
+    if (this.authService.isDoctor()) {
+      this.loadDoctorAppointments();
+    }
+  }
+
   // Actions
   checkIn(id: number): void {
-    this.dashboardService.checkInAppointment(id).subscribe({
-      next: () => this.loadDashboardData(),
-      error: (err) => console.error('Check-in failed', err)
-    });
+    this.dashboardService
+      .checkInAppointment(id)
+      .subscribe({
+        next: () => {
+          this.refreshDashboard();
+        },
+        error: (err) =>
+          console.error(
+            'Check-in failed',
+            err)
+      });
   }
 
   cancel(id: number): void {
     if (confirm('Are you sure you want to cancel this appointment?')) {
       this.dashboardService.cancelAppointment(id).subscribe({
-        next: () => this.loadDashboardData(),
+        next: () => {
+          this.refreshDashboard();
+        },
         error: (err) => console.error('Cancel failed', err)
       });
     }
