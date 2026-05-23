@@ -16,6 +16,7 @@ import { PatientsService } from '../../services/patients.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPatientDialog } from '../../dialogs/add-patient-dialog/add-patient-dialog';
 import { EditPatientDialog } from '../../dialogs/edit-patient-dialog/edit-patient-dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-patients',
@@ -44,7 +45,7 @@ export class Patients
 
   private patientsService = inject(PatientsService);
   private dialog = inject(MatDialog);
-
+  private router = inject(Router);
   // Signals
 
   patients = signal<any[]>([]);
@@ -141,6 +142,6 @@ export class Patients
   }
 
   viewPatient(id: number): void {
-    console.log('View', id);
+    this.router.navigate(['/patients', id]);
   }
 }

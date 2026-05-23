@@ -5,56 +5,62 @@ import { MainLayout } from './layout/main-layout/main-layout';
 
 export const routes: Routes = [
 
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
+    {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full'
+    },
 
-  {
-    path: 'login',
-    component: LoginComponent
-  },
+    {
+        path: 'login',
+        component: LoginComponent
+    },
 
-  {
-    path: '',
-    component: MainLayout,
-    canActivate: [authGuard],
+    {
+        path: '',
+        component: MainLayout,
+        canActivate: [authGuard],
 
-    children: [
+        children: [
 
-      {
-        path: 'dashboard',
-        loadComponent: () =>
-          import('./features/dashboard/pages/dashboard/dashboard')
-            .then(m => m.Dashboard)
-      },
+            {
+                path: 'dashboard',
+                loadComponent: () =>
+                    import('./features/dashboard/pages/dashboard/dashboard')
+                        .then(m => m.Dashboard)
+            },
 
-      {
-        path: 'patients',
-        loadComponent: () =>
-          import('./features/patients/pages/patients/patients')
-            .then(m => m.Patients)
-      },
+            {
+                path: 'patients',
+                loadComponent: () =>
+                    import('./features/patients/pages/patients/patients')
+                        .then(m => m.Patients)
+            },
 
-      {
-        path: 'appointments',
-        loadComponent: () =>
-          import('./features/appointments/pages/appointments/appointments')
-            .then(m => m.Appointments)
-      },
+            {
+                path: 'patients/:id',
+                loadComponent: () =>
+                    import('./features/patients/pages/patient-detail/patient-detail')
+                        .then(m => m.PatientDetail)
+            },
 
-      {
-        path: 'visits/:appointmentId',
-        loadComponent: () =>
-          import('./features/visits/pages/visits/visits')
-            .then(m => m.Visits)
-      }
-    ]
-  },
+            {
+                path: 'appointments',
+                loadComponent: () =>
+                    import('./features/appointments/pages/appointments/appointments')
+                        .then(m => m.Appointments)
+            },
+            {
+                path: 'visits/:appointmentId',
+                loadComponent: () =>
+                    import('./features/visits/pages/visits/visits')
+                        .then(m => m.Visits)
+            }
+        ]
+    },
 
-  {
-    path: '**',
-    redirectTo: 'login'
-  }
+    {
+        path: '**',
+        redirectTo: 'login'
+    }
 ];

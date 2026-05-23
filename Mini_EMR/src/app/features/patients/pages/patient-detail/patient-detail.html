@@ -1,0 +1,116 @@
+<div class="patient-detail-container">
+
+    <!-- Patient Info -->
+
+    @if(patient())
+    {
+        <mat-card class="patient-card">
+
+            <div class="patient-header">
+
+                <div>
+
+                    <h2>
+                        {{ patient()?.firstName }}
+                        {{ patient()?.lastName }}
+                    </h2>
+
+                    <p>
+                        {{ patient()?.gender }}
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="patient-info-grid">
+
+                <div>
+                    <strong>CNIC:</strong>
+                    {{ patient()?.cnic }}
+                </div>
+
+                <div>
+                    <strong>Phone:</strong>
+                    {{ patient()?.phoneNumber }}
+                </div>
+
+                <div>
+                    <strong>Blood Group:</strong>
+                    {{ patient()?.bloodGroup }}
+                </div>
+
+                <div>
+                    <strong>Address:</strong>
+                    {{ patient()?.address }}
+                </div>
+
+            </div>
+
+        </mat-card>
+    }
+
+    <!-- Active Appointment -->
+
+    @if(activeAppointment())
+    {
+        <mat-card class="active-appointment-card">
+
+            <mat-icon>
+                event_available
+            </mat-icon>
+
+            <div>
+
+                <div class="active-title">
+                    Active Appointment
+                </div>
+
+                <div>
+
+                    {{
+                      activeAppointment()
+                        ?.appointmentDateTime
+                        | date:'medium'
+                    }}
+
+                </div>
+
+            </div>
+
+        </mat-card>
+    }
+
+    <!-- Visit History -->
+
+    <mat-card class="history-card">
+
+        <h3>
+            Visit History
+        </h3>
+
+        @if(visitHistory().length > 0)
+        {
+            @for(visit of visitHistory(); track visit.id)
+            {
+                <div class="visit-item">
+
+                    <div>
+                        {{ visit.diagnosis }}
+                    </div>
+
+                </div>
+            }
+        }
+        @else
+        {
+            <div class="empty-history">
+
+                This patient has no visit history.
+
+            </div>
+        }
+
+    </mat-card>
+
+</div>

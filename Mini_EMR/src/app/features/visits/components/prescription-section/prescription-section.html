@@ -1,0 +1,160 @@
+<mat-card class="prescription-card">
+
+    <form
+        [formGroup]="prescriptionForm">
+
+        <!-- Header -->
+
+        <div class="section-header">
+
+            <div class="section-title">
+                Prescriptions
+            </div>
+
+            <button
+                mat-raised-button
+                color="primary"
+                type="button"
+                (click)="addPrescription()">
+
+                + Add Medicine
+
+            </button>
+
+        </div>
+
+        <!-- Form Array -->
+
+        <div formArrayName="prescriptions">
+
+            @for(
+                prescription of prescriptions.controls;
+                track $index)
+            {
+                <div
+                    class="prescription-row"
+                    [formGroupName]="$index">
+
+                    <!-- Medicine -->
+
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+                            Medicine
+                        </mat-label>
+
+                        <mat-select
+                            formControlName="medicineId">
+
+                            @for(
+                                medicine of medicines();
+                                track medicine.id)
+                            {
+                                <mat-option
+                                    [value]="medicine.id">
+
+                                    {{ medicine.name }}
+
+                                </mat-option>
+                            }
+
+                        </mat-select>
+
+                    </mat-form-field>
+
+                    <!-- Dosage -->
+
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+                            Dosage
+                        </mat-label>
+
+                        <input
+                            matInput
+                            placeholder="500mg"
+                            formControlName="dosage">
+
+                    </mat-form-field>
+
+                    <!-- Frequency -->
+
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+                            Frequency
+                        </mat-label>
+
+                        <mat-select
+                            formControlName="frequency">
+
+                            <mat-option value="Once Daily">
+                                Once Daily
+                            </mat-option>
+
+                            <mat-option value="Twice Daily">
+                                Twice Daily
+                            </mat-option>
+
+                            <mat-option value="Three Times Daily">
+                                Three Times Daily
+                            </mat-option>
+
+                        </mat-select>
+
+                    </mat-form-field>
+
+                    <!-- Duration -->
+
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+                            Duration (Days)
+                        </mat-label>
+
+                        <input
+                            matInput
+                            type="number"
+                            formControlName="durationDays">
+
+                    </mat-form-field>
+
+                    <!-- Instructions -->
+
+                    <mat-form-field
+                        appearance="outline"
+                        class="full-width">
+
+                        <mat-label>
+                            Instructions
+                        </mat-label>
+
+                        <input
+                            matInput
+                            formControlName="instructions">
+
+                    </mat-form-field>
+
+                    <!-- Remove -->
+
+                    <button
+                        mat-icon-button
+                        color="warn"
+                        type="button"
+                        class="remove-btn"
+                        (click)="removePrescription($index)">
+
+                        <mat-icon>
+                            close
+                        </mat-icon>
+
+                    </button>
+
+                </div>
+            }
+
+        </div>
+
+    </form>
+
+</mat-card>

@@ -1,0 +1,48 @@
+.vitals-card
+{
+    padding: 20px;
+
+    border-radius: 16px;
+}
+
+/* Title */
+
+.section-title
+{
+    font-size: 20px;
+
+    font-weight: 700;
+
+    color: #1e293b;
+
+    margin-bottom: 20px;
+}
+
+/* Grid */
+
+.vitals-grid
+{
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 16px;
+}
+
+/* Inputs */
+
+mat-form-field
+{
+    width: 100%;
+}
+
+/* Responsive */
+
+@media (max-width: 768px)
+{
+    .vitals-grid
+    {
+        grid-template-columns: 1fr;
+    }
+}

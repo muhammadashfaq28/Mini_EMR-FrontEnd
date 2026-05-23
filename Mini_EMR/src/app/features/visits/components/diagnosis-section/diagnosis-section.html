@@ -1,0 +1,72 @@
+<mat-card class="diagnosis-card">
+
+    <div class="section-title">
+
+        Clinical Notes
+
+    </div>
+
+    <form
+        [formGroup]="diagnosisForm"
+        class="diagnosis-form">
+
+        <!-- Chief Complaint -->
+
+        <mat-form-field
+            appearance="outline"
+            class="full-width">
+
+            <mat-label>
+                Chief Complaint
+            </mat-label>
+
+            <textarea
+                matInput
+                rows="3"
+                formControlName="chiefComplaint"
+                (input)="updateDiagnosis()">
+            </textarea>
+
+        </mat-form-field>
+
+        <!-- Diagnosis -->
+
+        <mat-form-field
+            appearance="outline"
+            class="full-width">
+
+            <mat-label>
+                Diagnosis
+            </mat-label>
+
+            <textarea
+                matInput
+                rows="2"
+                formControlName="diagnosis"
+                (input)="updateDiagnosis()">
+            </textarea>
+
+        </mat-form-field>
+
+        <!-- Clinical Notes -->
+
+        <mat-form-field
+            appearance="outline"
+            class="full-width">
+
+            <mat-label>
+                Clinical Notes
+            </mat-label>
+
+            <textarea
+                matInput
+                rows="3"
+                formControlName="clinicalNotes"
+                (input)="updateDiagnosis()">
+            </textarea>
+
+        </mat-form-field>
+
+    </form>
+
+</mat-card>

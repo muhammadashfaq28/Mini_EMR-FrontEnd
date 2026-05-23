@@ -1,0 +1,83 @@
+.prescription-card
+{
+    padding: 20px;
+
+    border-radius: 16px;
+}
+
+/* Header */
+
+.section-header
+{
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+/* Title */
+
+.section-title
+{
+    font-size: 20px;
+
+    font-weight: 700;
+
+    color: #1e293b;
+}
+
+/* Row */
+
+.prescription-row
+{
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 16px;
+
+    margin-bottom: 18px;
+
+    position: relative;
+}
+
+/* Full Width */
+
+.full-width
+{
+    grid-column: span 4;
+}
+
+/* Inputs */
+
+mat-form-field
+{
+    width: 100%;
+}
+
+/* Remove */
+
+.remove-btn
+{
+    align-self: center;
+
+    margin-top: 4px;
+}
+/* Responsive */
+
+@media (max-width: 768px)
+{
+    .prescription-row
+    {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width
+    {
+        grid-column: span 1;
+    }
+}

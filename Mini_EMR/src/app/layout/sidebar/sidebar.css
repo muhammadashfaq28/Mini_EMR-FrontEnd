@@ -114,6 +114,7 @@ a[mat-list-item] mat-icon
     color: #cbd5e1 !important;
 
     margin-right: 14px;
+
 }
 
 /* ===================== TEXT ===================== */
@@ -172,6 +173,7 @@ a[mat-list-item]:hover
 
     font-weight: 600 !important;
 }
+
 
 /* ===================== MATERIAL FIX ===================== */
 

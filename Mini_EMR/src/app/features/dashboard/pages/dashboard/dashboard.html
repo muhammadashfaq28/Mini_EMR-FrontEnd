@@ -189,16 +189,24 @@
                         </button>
                         }
 
-                        @if(row.status === 'CheckedIn')
+                        @if(
+                        row.status === 'CheckedIn'
+                        &&
+                        authService.isDoctor()
+                        )
                         {
                         <button mat-raised-button color="accent" (click)="startVisit(row.id)">
+
                             Start Visit
+
                         </button>
+
                         <button mat-raised-button color="warn" (click)="cancel(row.id)">
+
                             Cancel
+
                         </button>
                         }
-
                         @if(row.status === 'Completed')
                         {
                         <button mat-raised-button color="primary">

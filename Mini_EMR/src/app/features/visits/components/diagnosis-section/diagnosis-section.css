@@ -1,0 +1,41 @@
+.diagnosis-card
+{
+    padding: 20px;
+
+    border-radius: 16px;
+}
+
+/* Title */
+
+.section-title
+{
+    font-size: 20px;
+
+    font-weight: 700;
+
+    color: #1e293b;
+
+    margin-bottom: 20px;
+}
+
+/* Form */
+
+.diagnosis-form
+{
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+}
+
+/* Full Width */
+
+.full-width
+{
+    width: 100%;
+}
+textarea
+{
+    resize: none;
+}

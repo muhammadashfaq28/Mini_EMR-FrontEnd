@@ -1,0 +1,76 @@
+.patient-detail-container
+{
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+/* Cards */
+
+mat-card
+{
+    padding: 20px;
+
+    border-radius: 16px;
+}
+
+/* Header */
+
+.patient-header
+{
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+/* Grid */
+
+.patient-info-grid
+{
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 16px;
+}
+
+/* Active Appointment */
+
+.active-appointment-card
+{
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    background-color: #eff6ff;
+}
+
+.active-title
+{
+    font-weight: 600;
+
+    margin-bottom: 4px;
+}
+
+/* History */
+
+.history-card h3
+{
+    margin-bottom: 20px;
+}
+
+.empty-history
+{
+    color: #64748b;
+
+    padding: 20px 0;
+}
