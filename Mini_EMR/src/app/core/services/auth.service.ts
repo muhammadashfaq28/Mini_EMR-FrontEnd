@@ -1,13 +1,15 @@
 import { Injectable, signal } from '@angular/core';
+import { UserRole } from '../.././shared/models/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private readonly tokenKey = 'token';
+  private readonly roleKey = 'role';
+  private readonly userNameKey = 'fullName';
 
-  private tokenKey = 'token';
-  private roleKey = 'role';
-  private userNameKey = 'fullName';
+  currentUser = signal<string | null>(null);
 
   setFullName(name: string): void {
     localStorage.setItem(this.userNameKey, name);
@@ -17,18 +19,23 @@ export class AuthService {
     return localStorage.getItem(this.userNameKey);
   }
 
-  currentUser = signal<string | null>(null);
-
   setToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);
     this.currentUser.set(token);
   }
-  setRole(role: string): void {
+
+  setRole(role: UserRole): void {
     localStorage.setItem(this.roleKey, role);
   }
 
-  getRole(): string | null {
-    return localStorage.getItem(this.roleKey);
+  getRole(): UserRole | null {
+    const role = localStorage.getItem(this.roleKey);
+
+    if (role === 'Doctor' || role === 'Receptionist') {
+      return role;
+    }
+
+    return null;
   }
 
   isDoctor(): boolean {
@@ -53,5 +60,4 @@ export class AuthService {
     localStorage.removeItem(this.userNameKey);
     this.currentUser.set(null);
   }
-
 }

@@ -46,7 +46,25 @@
         <!-- Time -->
         <mat-form-field appearance="outline">
             <mat-label>Appointment Time</mat-label>
-            <input matInput type="time" formControlName="appointmentTime">
+            <mat-select formControlName="appointmentTime">
+                <mat-option value="09:00">09:00 AM</mat-option>
+                <mat-option value="09:30">09:30 AM</mat-option>
+                <mat-option value="10:00">10:00 AM</mat-option>
+                <mat-option value="10:30">10:30 AM</mat-option>
+                <mat-option value="11:00">11:00 AM</mat-option>
+                <mat-option value="11:30">11:30 AM</mat-option>
+                <mat-option value="12:00">12:00 PM</mat-option>
+                <mat-option value="12:30">12:30 PM</mat-option>
+                <mat-option value="01:00">01:00 PM</mat-option>
+                <mat-option value="01:30">01:30 PM</mat-option>
+                <mat-option value="02:00">02:00 PM</mat-option>
+                <mat-option value="02:30">02:30 PM</mat-option>
+                <mat-option value="03:00">03:00 PM</mat-option>
+                <mat-option value="03:30">03:30 PM</mat-option>
+                <mat-option value="04:00">04:00 PM</mat-option>
+                <mat-option value="04:30">04:30 PM</mat-option>
+                <mat-option value="05:00">05:00 PM</mat-option>
+            </mat-select>
         </mat-form-field>
 
         <!-- Notes -->
@@ -59,8 +77,8 @@
 </mat-dialog-content>
 
 <mat-dialog-actions class="d-flex justify-content-end gap-2 px-3 pb-3">
-    <button mat-button (click)="close()">Cancel</button>
-    <button mat-raised-button color="primary" [disabled]="isSaving" (click)="save()">
+    <button mat-button type="button" (click)="close()">Cancel</button>
+    <button mat-raised-button color="primary" type="button" [disabled]="isSaving" (click)="save()">
         Book Appointment
     </button>
 </mat-dialog-actions>

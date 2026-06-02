@@ -1,10 +1,26 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+
 import { PatientsService } from '../../services/patients.service';
 import { DashboardService } from '../../../dashboard/services/dashboard.service';
+import { PatientModel } from '../../../../shared/models/patient.model';
+import { VisitHistoryModel } from '../../../../shared/models/visit.model';
+
+type AppointmentStatus = 'Booked' | 'CheckedIn' | 'Completed' | 'Cancelled';
+
+interface PatientAppointmentModel {
+  id: number;
+  patientId: number;
+  patientName: string;
+  age: number;
+  gender: string;
+  doctorName: string;
+  appointmentDateTime: string;
+  status: AppointmentStatus;
+}
 
 @Component({
   selector: 'app-patient-detail',
@@ -14,19 +30,21 @@ import { DashboardService } from '../../../dashboard/services/dashboard.service'
   styleUrl: './patient-detail.css'
 })
 export class PatientDetail implements OnInit {
+  private readonly route = inject(ActivatedRoute);
+  private readonly patientsService = inject(PatientsService);
+  private readonly dashboardService = inject(DashboardService);
 
-  // Injections
-  private route = inject(ActivatedRoute);
-  private patientsService = inject(PatientsService);
-  private dashboardService = inject(DashboardService);
-
-  // Signals
-  patient = signal<any>(null);
-  activeAppointment = signal<any>(null);
-  visitHistory = signal<any[]>([]);
+  patient = signal<PatientModel | null>(null);
+  activeAppointment = signal<PatientAppointmentModel | null>(null);
+  visitHistory = signal<VisitHistoryModel[]>([]);
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
+
+    if (!id || Number.isNaN(id)) {
+      return;
+    }
+
     this.loadPatient(id);
     this.loadAppointments(id);
     this.loadVisitHistory(id);
@@ -34,23 +52,28 @@ export class PatientDetail implements OnInit {
 
   loadPatient(id: number): void {
     this.patientsService.getPatientById(id).subscribe({
-      next: (response: any) => this.patient.set(response)
+      next: response => this.patient.set(response)
     });
   }
 
   loadAppointments(patientId: number): void {
     this.dashboardService.getAppointments('', '').subscribe({
-      next: (response: any[]) => {
-        const active = response.find(a =>
-          a.patientId === patientId &&
-          (a.status === 'Booked' || a.status === 'CheckedIn')
+      next: response => {
+        const active = response.find(
+          appointment =>
+            appointment.patientId === patientId &&
+            (appointment.status === 'Booked' || appointment.status === 'CheckedIn')
         );
-        this.activeAppointment.set(active);
+
+        this.activeAppointment.set(active ?? null);
       }
     });
   }
 
-  loadVisitHistory(patientId: number): void {
-    this.visitHistory.set([]);
+  loadVisitHistory(id: number): void {
+    this.patientsService.getPatientVisits(id).subscribe({
+      next: response => this.visitHistory.set(response)
+    });
   }
+
 }

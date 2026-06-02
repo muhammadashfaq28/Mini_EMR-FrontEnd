@@ -1,9 +1,6 @@
 <mat-card class="prescription-card">
 
-    <form
-        [formGroup]="prescriptionForm">
-
-        <!-- Header -->
+    <form [formGroup]="prescriptionForm">
 
         <div class="section-header">
 
@@ -23,19 +20,15 @@
 
         </div>
 
-        <!-- Form Array -->
-
         <div formArrayName="prescriptions">
 
-            @for(
+            @for (
                 prescription of prescriptions.controls;
-                track $index)
-            {
+                track $index
+            ) {
                 <div
                     class="prescription-row"
                     [formGroupName]="$index">
-
-                    <!-- Medicine -->
 
                     <mat-form-field appearance="outline">
 
@@ -43,26 +36,20 @@
                             Medicine
                         </mat-label>
 
-                        <mat-select
-                            formControlName="medicineId">
+                        <mat-select formControlName="medicineId">
 
-                            @for(
+                            @for (
                                 medicine of medicines();
-                                track medicine.id)
-                            {
-                                <mat-option
-                                    [value]="medicine.id">
-
-                                    {{ medicine.name }}
-
+                                track medicine.id
+                            ) {
+                                <mat-option [value]="medicine.id">
+                                    {{ medicine.name }} - {{ medicine.strength }}
                                 </mat-option>
                             }
 
                         </mat-select>
 
                     </mat-form-field>
-
-                    <!-- Dosage -->
 
                     <mat-form-field appearance="outline">
 
@@ -73,12 +60,9 @@
                         <input
                             matInput
                             placeholder="500mg"
-                            formControlName="dosage"
-                            >
+                            formControlName="dosage">
 
                     </mat-form-field>
-
-                    <!-- Frequency -->
 
                     <mat-form-field appearance="outline">
 
@@ -86,26 +70,31 @@
                             Frequency
                         </mat-label>
 
-                        <mat-select
-                            formControlName="frequency">
+                        <mat-select formControlName="frequency">
 
-                            <mat-option value="Once Daily">
-                                Once Daily
+                            <mat-option value="Once daily">
+                                Once daily
                             </mat-option>
 
-                            <mat-option value="Twice Daily">
-                                Twice Daily
+                            <mat-option value="Twice daily">
+                                Twice daily
                             </mat-option>
 
-                            <mat-option value="Three Times Daily">
-                                Three Times Daily
+                            <mat-option value="Thrice daily">
+                                Thrice daily
+                            </mat-option>
+
+                            <mat-option value="Four times daily">
+                                Four times daily
+                            </mat-option>
+
+                            <mat-option value="As needed">
+                                As needed
                             </mat-option>
 
                         </mat-select>
 
                     </mat-form-field>
-
-                    <!-- Duration -->
 
                     <mat-form-field appearance="outline">
 
@@ -120,8 +109,6 @@
 
                     </mat-form-field>
 
-                    <!-- Instructions -->
-
                     <mat-form-field
                         appearance="outline"
                         class="full-width">
@@ -135,8 +122,6 @@
                             formControlName="instructions">
 
                     </mat-form-field>
-
-                    <!-- Remove -->
 
                     <button
                         mat-icon-button

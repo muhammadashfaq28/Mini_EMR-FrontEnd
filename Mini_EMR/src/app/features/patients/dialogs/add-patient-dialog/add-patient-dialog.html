@@ -24,6 +24,13 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput [matDatepicker]="dobPicker" formControlName="dateOfBirth">
+            <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+            <mat-datepicker #dobPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
             <mat-label>CNIC</mat-label>
             <input matInput formControlName="cnic">
         </mat-form-field>
@@ -47,8 +54,8 @@
 </mat-dialog-content>
 
 <mat-dialog-actions class="d-flex justify-content-end gap-2 px-3 pb-3">
-    <button mat-button (click)="close()">Cancel</button>
-    <button mat-raised-button color="primary" [disabled]="isSaving" (click)="save()">
+    <button mat-button type="button" (click)="close()">Cancel</button>
+    <button mat-raised-button color="primary" type="button" [disabled]="isSaving" (click)="save()">
         Save Patient
     </button>
 </mat-dialog-actions>

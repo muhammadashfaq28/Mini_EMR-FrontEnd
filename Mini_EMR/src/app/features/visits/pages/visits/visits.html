@@ -1,85 +1,57 @@
-<mat-horizontal-stepper
-    linear>
+<mat-horizontal-stepper linear>
 
     <!-- VITALS -->
-
     <mat-step label="Vitals">
-
-        <app-vitals-section>
-        </app-vitals-section>
+        <app-vitals-section></app-vitals-section>
 
         <div class="step-actions">
-
             <button
                 mat-raised-button
                 color="primary"
                 matStepperNext>
-
                 Next
-
             </button>
-
         </div>
-
     </mat-step>
 
     <!-- CLINICAL NOTES -->
-
     <mat-step label="Clinical Notes">
-
-        <app-diagnosis-section>
-        </app-diagnosis-section>
+        <app-diagnosis-section></app-diagnosis-section>
 
         <div class="step-actions">
-
             <button
                 mat-stroked-button
                 matStepperPrevious>
-
                 Back
-
             </button>
 
             <button
                 mat-raised-button
                 color="primary"
                 matStepperNext>
-
                 Next
-
             </button>
-
         </div>
-
     </mat-step>
 
     <!-- PRESCRIPTIONS -->
-
     <mat-step label="Prescription">
-
-        <app-prescription-section>
-        </app-prescription-section>
+        <app-prescription-section></app-prescription-section>
 
         <div class="step-actions">
-
             <button
                 mat-stroked-button
                 matStepperPrevious>
-
                 Back
-
             </button>
 
             <button
                 mat-raised-button
-                color="primary">
-
+                color="primary"
+                (click)="saveVisit()">
                 Save Visit
-
             </button>
-
         </div>
-
     </mat-step>
 
 </mat-horizontal-stepper>

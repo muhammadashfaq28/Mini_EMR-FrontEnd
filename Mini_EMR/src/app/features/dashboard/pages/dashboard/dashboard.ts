@@ -14,18 +14,43 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { provideNativeDateAdapter } from '@angular/material/core';
+
 import { DashboardService } from '../../services/dashboard.service';
 import { AuthService } from '../../../../core/services/auth.service';
-import { MatIcon } from "@angular/material/icon";
+
+type AppointmentStatus = 'Booked' | 'CheckedIn' | 'Completed' | 'Cancelled';
+
+interface DashboardAppointmentModel {
+  id: number;
+  patientId: number;
+  patientName: string;
+  age: number;
+  gender: string;
+  doctorName: string;
+  appointmentDateTime: string;
+  status: AppointmentStatus;
+}
+
+interface DashboardStatusCountsModel {
+  total: number;
+  booked: number;
+  checkedIn: number;
+  completed: number;
+}
+
+interface DoctorAppointmentModel {
+  id: number;
+  patientName: string;
+  appointmentDateTime: string;
+  status: AppointmentStatus;
+}
 
 @Component({
   selector: 'app-dashboard',
-
   standalone: true,
-
   providers: [provideNativeDateAdapter()],
-
   imports: [
     CommonModule,
     FormsModule,
@@ -36,31 +61,24 @@ import { MatIcon } from "@angular/material/icon";
     MatDatepickerModule,
     MatInputModule,
     MatButtonModule,
-    MatIcon
+    MatIconModule
   ],
-
   templateUrl: './dashboard.html',
-
   styleUrls: ['./dashboard.css']
 })
 export class Dashboard implements OnInit {
+  private readonly dashboardService = inject(DashboardService);
+  readonly authService = inject(AuthService);
+  readonly router = inject(Router);
 
-  // Injections
-  private dashboardService = inject(DashboardService);
-  authService = inject(AuthService);
-  router = inject(Router);
+  appointments = signal<DashboardAppointmentModel[]>([]);
+  statusCounts = signal<DashboardStatusCountsModel | null>(null);
+  doctorAppointments = signal<DoctorAppointmentModel[]>([]);
 
-  // Signals
-  appointments = signal<any[]>([]);
-  statusCounts = signal<any>(null);
-  doctorAppointments = signal<any[]>([]);
-
-  // Filters
   selectedDate: Date | null = null;
   selectedStatus = '';
 
-  // Table
-  displayedColumns = [
+  displayedColumns: string[] = [
     'patient',
     'ageGender',
     'doctor',
@@ -74,28 +92,23 @@ export class Dashboard implements OnInit {
   }
 
   loadDashboardData(): void {
-    let date = '';
+    const date = this.selectedDate
+      ? this.selectedDate.toLocaleDateString('en-CA')
+      : '';
 
-    if (this.selectedDate) {
-      date = this.selectedDate.toLocaleDateString('en-CA');
-    }
+    this.dashboardService.getAppointments(date, this.selectedStatus).subscribe({
+      next: (response: DashboardAppointmentModel[]) => this.appointments.set(response)
+    });
 
-    this.dashboardService.getAppointments(date, this.selectedStatus)
-      .subscribe({
-        next: (response: any) => this.appointments.set(response)
-      });
-
-    this.dashboardService.getStatusCounts(date)
-      .subscribe({
-        next: (response: any) => this.statusCounts.set(response)
-      });
+    this.dashboardService.getStatusCounts(date).subscribe({
+      next: (response: DashboardStatusCountsModel) => this.statusCounts.set(response)
+    });
   }
 
   loadDoctorAppointments(): void {
-    this.dashboardService.getDoctorTodayAppointments()
-      .subscribe({
-        next: (response: any) => this.doctorAppointments.set(response)
-      });
+    this.dashboardService.getDoctorTodayAppointments().subscribe({
+      next: (response: DoctorAppointmentModel[]) => this.doctorAppointments.set(response)
+    });
   }
 
   onFilterChange(): void {
@@ -104,24 +117,19 @@ export class Dashboard implements OnInit {
 
   refreshDashboard(): void {
     this.loadDashboardData();
+
     if (this.authService.isDoctor()) {
       this.loadDoctorAppointments();
     }
   }
 
-  // Actions
   checkIn(id: number): void {
-    this.dashboardService
-      .checkInAppointment(id)
-      .subscribe({
-        next: () => {
-          this.refreshDashboard();
-        },
-        error: (err) =>
-          console.error(
-            'Check-in failed',
-            err)
-      });
+    this.dashboardService.checkInAppointment(id).subscribe({
+      next: () => {
+        this.refreshDashboard();
+      },
+      error: err => console.error('Check-in failed', err)
+    });
   }
 
   cancel(id: number): void {
@@ -130,7 +138,7 @@ export class Dashboard implements OnInit {
         next: () => {
           this.refreshDashboard();
         },
-        error: (err) => console.error('Cancel failed', err)
+        error: err => console.error('Cancel failed', err)
       });
     }
   }
@@ -139,7 +147,7 @@ export class Dashboard implements OnInit {
     this.router.navigate(['/visits', id]);
   }
 
-  viewVisit(id: number): void {
-    this.router.navigate(['/patients', id, 'visit']);
+  viewVisit(patientId: number): void {
+    this.router.navigate(['/patients', patientId]);
   }
 }

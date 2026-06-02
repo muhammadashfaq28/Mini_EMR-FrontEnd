@@ -1,19 +1,19 @@
-import { PrescriptionModel, VitalsModel } from '../models/visit.model';
+import { PrescriptionRequestModel, VitalsModel } from '../../../shared/models/visit.model';
+import { PatientModel } from '../../../shared/models/patient.model';
 
-export interface VisitState
-{
-  patient: unknown | null;
+
+export interface VisitState {
+  patient: PatientModel | null;
   chiefComplaint: string;
   diagnosis: string;
   notes: string;
   vitals: VitalsModel | null;
-  prescriptions: PrescriptionModel[];
+  prescriptions: PrescriptionRequestModel[];
   loading: boolean;
   error: string | null;
 }
 
-export const initialVisitState: VisitState =
-{
+export const initialVisitState: VisitState = {
   patient: null,
   chiefComplaint: '',
   diagnosis: '',

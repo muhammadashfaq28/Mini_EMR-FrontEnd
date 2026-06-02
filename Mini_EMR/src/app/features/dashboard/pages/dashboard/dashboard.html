@@ -46,11 +46,10 @@
             <mat-icon>medical_services</mat-icon>
             <h3>My Appointments Today</h3>
         </div>
+
         @for(item of doctorAppointments(); track item.id)
         {
         <div class="doctor-appointment-item">
-
-            <!-- LEFT -->
 
             <div class="appointment-left">
 
@@ -65,46 +64,30 @@
                     </div>
 
                     <div class="appointment-time">
-
-                        {{ item.appointmentDateTime
-                        | date:'shortTime' }}
-
+                        {{ item.appointmentDateTime | date:'shortTime' }}
                     </div>
 
                 </div>
 
             </div>
 
-            <!-- RIGHT -->
-
             <div class="appointment-actions">
 
-                <span class="status-badge
-            status-{{ item.status | lowercase }}">
-
+                <span class="status-badge status-{{ item.status | lowercase }}">
                     {{ item.status }}
-
                 </span>
-
-                <!-- BOOKED -->
 
                 @if(item.status === 'Booked')
                 {
                 <button mat-raised-button color="primary" class="small-btn" (click)="checkIn(item.id)">
-
                     Check In
-
                 </button>
                 }
-
-                <!-- CHECKED IN -->
 
                 @if(item.status === 'CheckedIn')
                 {
                 <button mat-raised-button color="accent" class="small-btn" (click)="startVisit(item.id)">
-
                     Start Visit
-
                 </button>
                 <button mat-raised-button color="warn" (click)="cancel(item.id)">
                     Cancel
@@ -196,20 +179,17 @@
                         )
                         {
                         <button mat-raised-button color="accent" (click)="startVisit(row.id)">
-
                             Start Visit
-
                         </button>
 
                         <button mat-raised-button color="warn" (click)="cancel(row.id)">
-
                             Cancel
-
                         </button>
                         }
+
                         @if(row.status === 'Completed')
                         {
-                        <button mat-raised-button color="primary">
+                        <button mat-raised-button color="primary" (click)="viewVisit(row.patientId)">
                             View
                         </button>
                         }
