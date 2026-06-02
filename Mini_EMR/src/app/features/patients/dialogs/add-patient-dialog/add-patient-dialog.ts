@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   inject
 } from '@angular/core';
@@ -17,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { PatientsService } from '../../services/patients.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Patient } from '../../models/patient.model';
 
 @Component({
   selector: 'app-add-patient-dialog',
@@ -47,6 +49,7 @@ export class AddPatientDialog
   private patientsService = inject(PatientsService);
   private dialogRef = inject(MatDialogRef<AddPatientDialog>);
   private snackBar = inject(MatSnackBar);
+  private cdr = inject(ChangeDetectorRef);
   isSaving = false;
 
   patientForm = this.fb.group({
@@ -59,8 +62,6 @@ export class AddPatientDialog
     bloodGroup: [''],address: ['']
   });
 
-
-
   save(): void
   {
     if (this.patientForm.invalid)
@@ -71,11 +72,12 @@ export class AddPatientDialog
 
     this.isSaving = true;
 
-    this.patientsService.createPatient( this.patientForm.value)
+    this.patientsService.createPatient( this.patientForm.value as Patient)
       .subscribe({
         next: () =>
         {
           this.isSaving = false;
+          this.cdr.detectChanges();
           this.snackBar.open(
             'Patient saved successfully',
             'Close',
@@ -92,6 +94,7 @@ export class AddPatientDialog
           console.error(
             'Failed to save patient',err);
           this.isSaving = false;
+          this.cdr.detectChanges();
         }
       });
   }

@@ -16,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { PatientsService } from '../../services/patients.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Patient } from '../../models/patient.model';
 
 @Component({
   selector: 'app-edit-patient-dialog',
@@ -66,7 +67,7 @@ export class EditPatientDialog {
   //  CONSTRUCTOR 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: any) {
+    public data: Patient) {
     this.patientForm.patchValue({
       firstName: data.firstName,
       lastName: data.lastName,
@@ -89,8 +90,8 @@ export class EditPatientDialog {
 
     this.patientsService
       .updatePatient(
-        this.data.id,
-        this.patientForm.value)
+        this.data.id!,
+        this.patientForm.value as Patient)
       .subscribe({
         next: () => {
           this.isSaving = false;

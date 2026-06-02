@@ -1,61 +1,46 @@
-import {createReducer, on} from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 
-import {
-  initialVisitState
-} from './visit.state';
+import { initialVisitState } from './visit.state';
+import * as VisitActions from './visit.actions';
 
-import * as VisitActions
-from './visit.actions';
-
-export const visitReducer =
-  createReducer(
-
+export const visitReducer = createReducer(
     initialVisitState,
 
-    on(
-      VisitActions.setPatient,
-      (state, action) => ({
+    on(VisitActions.setPatient, (state, action) => ({
         ...state,
         patient: action.patient
-      })
-    ),
+    })),
 
-    on(
-      VisitActions.setDiagnosis,
-      (state, action) => ({
+    on(VisitActions.setChiefComplaint, (state, action) => ({
+        ...state,
+        chiefComplaint: action.chiefComplaint
+    })),
+
+    on(VisitActions.setDiagnosis, (state, action) => ({
         ...state,
         diagnosis: action.diagnosis
-      })
-    ),
+    })),
 
-    on(
-      VisitActions.setNotes,
-      (state, action) => ({
+    on(VisitActions.setNotes, (state, action) => ({
         ...state,
         notes: action.notes
-      })
-    ),
+    })),
 
-    on(
-      VisitActions.addPrescription,
-      (state, action) => ({
+    on(VisitActions.addPrescription, (state, action) => ({
         ...state,
-        prescriptions: [
-          ...state.prescriptions,
-          action.prescription
-        ]
-      })
-    ),
+        prescriptions: [...state.prescriptions, action.prescription]
+    })),
 
-    on(
-      VisitActions.removePrescription,
-      (state, action) => ({
+    on(VisitActions.removePrescription, (state, action) => ({
         ...state,
-        prescriptions:
-          state.prescriptions.filter(
-            (_, i) =>
-              i !== action.index
-          )
-      })
-    )
-  );
+        prescriptions: state.prescriptions.filter((_, i) => i !== action.index)
+    })),
+    on(VisitActions.setVitals, (state, action) => ({
+        ...state,
+        vitals: action.vitals
+    })),
+    on(VisitActions.setPrescriptions, (state, action) => ({
+        ...state,
+        prescriptions: action.prescriptions
+    })),
+);
