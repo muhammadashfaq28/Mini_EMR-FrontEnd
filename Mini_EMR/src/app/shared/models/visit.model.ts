@@ -13,9 +13,10 @@ export interface VitalsModel {
     bpSystolic?: number | null;
     bpDiastolic?: number | null;
     pulseBpm?: number | null;
-    temperatureF?: number | null;
+    temperatureC?: number | null;
+    temperatureF?: number | null; // for response display only, not stored in backend
     respiratoryRate?: number | null;
-    BMI?: number | null;
+    bmi?: number | null;
 }
 
 export interface ClinicalNotesModel {
@@ -34,10 +35,19 @@ export interface PrescriptionRequestModel {
 
 export interface SaveVisitRequestModel {
     appointmentId: number;
-    vitals: VitalsModel;
     chiefComplaint: string;
     visitNote: string;
     diagnosis: string;
+
+    heightCm?: number | null;
+    weightKg?: number | null;
+    bpSystolic?: number | null;
+    bpDiastolic?: number | null;
+    pulseBpm?: number | null;
+    temperatureC?: number | null;
+    respiratoryRate?: number | null;
+    bmi?: number | null;
+
     prescriptions: PrescriptionRequestModel[];
 }
 
@@ -45,20 +55,21 @@ export interface VisitHistoryModel {
     id: number;
     visitDate: string;
     doctorName: string;
-    vitals: VitalsModel;
     chiefComplaint: string;
     visitNote: string;
     diagnosis: string;
+    vitals: VitalsModel;
     prescriptions: PrescriptionHistoryModel[];
 }
 
 export interface PrescriptionHistoryModel {
+    id: number;
+    medicineId: number;
     medicineName: string;
-    genericName: string;
     strength: string;
     dosage: string;
     frequency: string;
-    duration: string;
+    durationDays: number;
     instructions?: string | null;
 }
 

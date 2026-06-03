@@ -8,6 +8,9 @@ import { PatientsService } from '../../services/patients.service';
 import { DashboardService } from '../../../dashboard/services/dashboard.service';
 import { PatientModel } from '../../../../shared/models/patient.model';
 import { VisitHistoryModel } from '../../../../shared/models/visit.model';
+import { VitalStatusDirective } from '../../../../shared/directives/vital-status-directive';
+import { BmiPipe } from "../../../../shared/pipes/bmi.pipe";
+import { AgePipe } from "../../../../shared/pipes/age.pipe";
 
 type AppointmentStatus = 'Booked' | 'CheckedIn' | 'Completed' | 'Cancelled';
 
@@ -25,7 +28,7 @@ interface PatientAppointmentModel {
 @Component({
   selector: 'app-patient-detail',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatIconModule],
+  imports: [CommonModule, MatCardModule, MatIconModule, VitalStatusDirective, BmiPipe, AgePipe],
   templateUrl: './patient-detail.html',
   styleUrl: './patient-detail.css'
 })
@@ -70,10 +73,61 @@ export class PatientDetail implements OnInit {
     });
   }
 
-  loadVisitHistory(id: number): void {
-    this.patientsService.getPatientVisits(id).subscribe({
-      next: response => this.visitHistory.set(response)
+  loadVisitHistory(patientId: number): void {
+    this.patientsService.getPatientVisits(patientId).subscribe({
+      next: response => this.visitHistory.set(response),
+      error: err => {
+        console.error('Failed to load visit history', err);
+        this.visitHistory.set([]);
+      }
     });
+  }
+
+  getVitalStatus(type: string, value: number | null | undefined): string {
+    if (value === null || value === undefined) {
+      return '';
+    }
+
+    const numericValue = Number(value);
+
+    if (Number.isNaN(numericValue)) {
+      return '';
+    }
+
+    const isNormal = this.isVitalNormal(type, numericValue);
+    return isNormal ? 'Normal' : 'Abnormal';
+  }
+
+  private isVitalNormal(type: string, value: number): boolean {
+    switch (type) {
+      case 'bpSystolic':
+        return value >= 90 && value <= 120;
+
+      case 'bpDiastolic':
+        return value >= 60 && value <= 80;
+
+      case 'pulseBpm':
+        return value >= 60 && value <= 100;
+
+      case 'temperatureF':
+        return value >= 97 && value <= 99;
+
+      case 'temperatureC':
+        return value >= 36.1 && value <= 37.2;
+
+      case 'respiratoryRate':
+        return value >= 12 && value <= 20;
+
+      case 'bmi':
+        return value >= 18.5 && value <= 24.9;
+
+      case 'heightCm':
+      case 'weightKg':
+        return value > 0;
+
+      default:
+        return true;
+    }
   }
 
 }

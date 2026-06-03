@@ -10,6 +10,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { PatientsService } from '../../services/patients.service';
 import { PatientModel, UpdatePatientRequestModel, Gender } from '../../../../shared/models/patient.model';
+import { cnicValidator } from '../../../../shared/validators/cnic.validator';
 
 @Component({
   selector: 'app-edit-patient-dialog',
@@ -42,7 +43,7 @@ export class EditPatientDialog {
     lastName: ['', Validators.required],
     gender: ['', Validators.required],
     dateOfBirth: this.fb.control<Date | null>(null, Validators.required),
-    cnic: ['', Validators.required],
+    cnic: ['', [Validators.required, cnicValidator()]],
     phoneNumber: ['', Validators.required],
     bloodGroup: [''],
     address: ['']

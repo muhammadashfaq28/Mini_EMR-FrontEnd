@@ -8,10 +8,7 @@
 
     <div class="logo-section">
 
-      <img
-        src="https://www.curemd.com/cmd/cmd-assets/images/lodar.gif"
-        alt="Mini EMR Logo"
-        class="logo-image">
+      <img src="https://www.curemd.com/cmd/cmd-assets/images/lodar.gif" alt="Mini EMR Logo" class="logo-image">
 
       <div class="logo-text">
         Mini EMR
@@ -25,10 +22,7 @@
 
       <!-- Dashboard -->
 
-      <a
-        mat-list-item
-        routerLink="/dashboard"
-        routerLinkActive="active-link">
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
 
         <mat-icon>dashboard</mat-icon>
 
@@ -38,10 +32,7 @@
 
       <!-- Patients -->
 
-      <a
-        mat-list-item
-        routerLink="/patients"
-        routerLinkActive="active-link">
+      <a mat-list-item routerLink="/patients" routerLinkActive="active-link">
 
         <mat-icon>groups</mat-icon>
 
@@ -51,10 +42,7 @@
 
       <!-- Appointments -->
 
-      <a
-        mat-list-item
-        routerLink="/appointments"
-        routerLinkActive="active-link">
+      <a mat-list-item routerLink="/appointments" routerLinkActive="active-link">
 
         <mat-icon>event</mat-icon>
 
@@ -66,16 +54,13 @@
 
       @if(authService.isDoctor())
       {
-        <a
-          mat-list-item
-          routerLink="visits/:appointmentId"
-          routerLinkActive="active-link">
+      <a mat-list-item routerLink="/settings" routerLinkActive="active-link">
 
-          <mat-icon>medical_services</mat-icon>
+        <mat-icon>settings</mat-icon>
 
-          <span>Visits</span>
+        <span>Settings</span>
 
-        </a>
+      </a>
       }
 
     </div>
@@ -86,11 +71,7 @@
 
   <div class="sidebar-footer">
 
-    <button
-      mat-raised-button
-      color="warn"
-      class="logout-btn"
-      (click)="logout()">
+    <button mat-raised-button color="warn" class="logout-btn" (click)="logout()">
 
       <mat-icon>logout</mat-icon>
 

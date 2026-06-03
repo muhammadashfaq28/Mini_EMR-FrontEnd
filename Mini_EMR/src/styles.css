@@ -3,3 +3,46 @@
 
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+.vital-field-normal .mat-mdc-text-field-wrapper {
+    background: #f0fdf4 !important;
+ 
+    border-radius: 6px !important;
+}
+
+.vital-field-normal .mat-mdc-form-field-hint {
+    color: #15803d !important;
+    font-weight: 600;
+}
+
+.vital-field-abnormal .mat-mdc-text-field-wrapper {
+    background: #fef2f2 !important;
+    border-radius: 6px !important;
+}
+
+.vital-field-abnormal .mat-mdc-form-field-hint {
+    color: #b91c1c !important;
+    font-weight: 600;
+}
+
+body.dark-theme {
+    background: #121212;
+    color: white;
+}
+
+body.dark-theme mat-card {
+    background: #1e1e1e !important;
+    color: white !important;
+}
+
+body.dark-theme .content {
+    background: #121212;
+}
+.appointment-dialog .mat-mdc-dialog-surface {
+    border-radius: 24px !important;
+    overflow: hidden;
+}
+
+.appointment-dialog .mat-mdc-dialog-container {
+    padding: 0 !important;
+}

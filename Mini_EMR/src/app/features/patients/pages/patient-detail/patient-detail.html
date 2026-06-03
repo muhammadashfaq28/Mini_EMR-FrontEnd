@@ -9,16 +9,15 @@
         <div class="patient-header">
 
             <div>
-
                 <h2>
                     {{ patient()?.firstName }}
                     {{ patient()?.lastName }}
                 </h2>
 
                 <p>
-                    {{ patient()?.gender }}
+                    {{ patient()?.gender }} · {{ patient()?.dateOfBirth | age }}
+                
                 </p>
-
             </div>
 
         </div>
@@ -83,49 +82,354 @@
 
     <mat-card class="history-card">
 
-        <h3>
-            Visit History
-        </h3>
+        <div class="history-header">
+            <h3>
+                Visit History
+            </h3>
+        </div>
 
         @if(visitHistory().length > 0)
         {
-        @for(visit of visitHistory(); track visit.id)
-        {
-        <div class="visit-item">
+        <div class="visits-list">
 
-            <div class="visit-header">
-                <strong>{{ visit.visitDate | date:'mediumDate' }}</strong>
-                <span>{{ visit.doctorName }}</span>
-            </div>
+            @for(visit of visitHistory(); track visit.id)
+            {
+            <div class="visit-card">
 
-            <div>
-                <strong>Chief Complaint:</strong>
-                {{ visit.chiefComplaint }}
-            </div>
+                <div class="visit-header">
 
-            <div>
-                <strong>Vitals:</strong>
-                Height: {{ visit.vitals?.heightCm || '-' }} cm,
-                Weight: {{ visit.vitals?.weightKg || '-' }} kg,
-                BP: {{ visit.vitals?.bpSystolic || '-' }}/{{ visit.vitals?.bpDiastolic || '-' }},
-                Pulse: {{ visit.vitals?.pulseBpm || '-' }},
-                Temp: {{ visit.vitals?.temperatureF || '-' }} F,
-                Resp: {{ visit.vitals?.respiratoryRate || '-' }},
-                BMI: {{ visit.vitals?.BMI || '-' }}
-            </div>
+                    <div>
+                        <div class="visit-date">
+                            {{ visit.visitDate | date:'mediumDate' }}
+                        </div>
 
-            <div>
-                <strong>Diagnosis:</strong>
-                {{ visit.diagnosis }}
-            </div>
+                        <div class="visit-time">
+                            {{ visit.visitDate | date:'shortTime' }}
+                        </div>
+                    </div>
 
-            <div>
-                <strong>Visit Note:</strong>
-                {{ visit.visitNote }}
+                    <div class="doctor-badge">
+                        <mat-icon>
+                            medical_services
+                        </mat-icon>
+
+                        <span>
+                            {{ visit.doctorName || 'Doctor' }}
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="visit-section">
+
+                    <div class="section-heading">
+                        Clinical Notes
+                    </div>
+
+                    <div class="clinical-grid">
+
+                        <div class="info-box">
+                            <label>
+                                Chief Complaint
+                            </label>
+
+                            <p>
+                                {{ visit.chiefComplaint || '-' }}
+                            </p>
+                        </div>
+
+                        <div class="info-box">
+                            <label>
+                                Diagnosis
+                            </label>
+
+                            <p>
+                                {{ visit.diagnosis || '-' }}
+                            </p>
+                        </div>
+
+                        <div class="info-box full-width">
+                            <label>
+                                Visit Note
+                            </label>
+
+                            <p>
+                                {{ visit.visitNote || '-' }}
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="visit-section">
+
+                    <div class="section-heading">
+                        Vitals
+                    </div>
+
+                    <div class="vitals-grid">
+
+                        <div class="vital-tile" appVitalStatus="heightCm" [vitalValue]="visit.vitals.heightCm">
+
+                            <span class="vital-label">
+                                Height
+                            </span>
+
+                            <strong>
+                                {{ visit.vitals.heightCm || '-' }}
+                            </strong>
+
+                            <small>
+                                @if(visit.vitals.heightCm)
+                                {
+                                {{ getVitalStatus('heightCm', visit.vitals.heightCm) }}
+                                }
+                                @else
+                                {
+                                cm
+                                }
+                            </small>
+
+                        </div>
+
+                        <div class="vital-tile" appVitalStatus="weightKg" [vitalValue]="visit.vitals.weightKg">
+
+                            <span class="vital-label">
+                                Weight
+                            </span>
+
+                            <strong>
+                                {{ visit.vitals.weightKg | bmi:visit.vitals.heightCm }}
+                            </strong>
+
+                            <small>
+                                @if(visit.vitals.weightKg)
+                                {
+                                {{ getVitalStatus('weightKg', visit.vitals.weightKg) }}
+                                }
+                                @else
+                                {
+                                kg
+                                }
+                            </small>
+
+                        </div>
+
+                        <div class="vital-tile" appVitalStatus="bpSystolic" [vitalValue]="visit.vitals.bpSystolic">
+
+                            <span class="vital-label">
+                                BP Systolic
+                            </span>
+
+                            <strong>
+                                {{ visit.vitals.bpSystolic || '-' }}
+                            </strong>
+
+                            <small>
+                                @if(visit.vitals.bpSystolic)
+                                {
+                                {{ getVitalStatus('bpSystolic', visit.vitals.bpSystolic) }}
+                                }
+                                @else
+                                {
+                                mmHg
+                                }
+                            </small>
+
+                        </div>
+
+                        <div class="vital-tile" appVitalStatus="bpDiastolic" [vitalValue]="visit.vitals.bpDiastolic">
+
+                            <span class="vital-label">
+                                BP Diastolic
+                            </span>
+
+                            <strong>
+                                {{ visit.vitals.bpDiastolic || '-' }}
+                            </strong>
+
+                            <small>
+                                @if(visit.vitals.bpDiastolic)
+                                {
+                                {{ getVitalStatus('bpDiastolic', visit.vitals.bpDiastolic) }}
+                                }
+                                @else
+                                {
+                                mmHg
+                                }
+                            </small>
+
+                        </div>
+
+                        <div class="vital-tile" appVitalStatus="pulseBpm" [vitalValue]="visit.vitals.pulseBpm">
+
+                            <span class="vital-label">
+                                Pulse
+                            </span>
+
+                            <strong>
+                                {{ visit.vitals.pulseBpm || '-' }}
+                            </strong>
+
+                            <small>
+                                @if(visit.vitals.pulseBpm)
+                                {
+                                {{ getVitalStatus('pulseBpm', visit.vitals.pulseBpm) }}
+                                }
+                                @else
+                                {
+                                bpm
+                                }
+                            </small>
+
+                        </div>
+
+                        <div class="vital-tile" appVitalStatus="temperatureF" [vitalValue]="visit.vitals.temperatureF">
+
+                            <span class="vital-label">
+                                Temperature
+                            </span>
+
+                            <strong>
+                                {{ visit.vitals.temperatureF || '-' }}
+                            </strong>
+
+                            <small>
+                                @if(visit.vitals.temperatureF)
+                                {
+                                {{ getVitalStatus('temperatureF', visit.vitals.temperatureF) }}
+                                }
+                                @else
+                                {
+                                °C
+                                }
+                            </small>
+
+                        </div>
+
+                        <div class="vital-tile" appVitalStatus="respiratoryRate"
+                            [vitalValue]="visit.vitals.respiratoryRate">
+
+                            <span class="vital-label">
+                                Resp. Rate
+                            </span>
+
+                            <strong>
+                                {{ visit.vitals.respiratoryRate || '-' }}
+                            </strong>
+
+                            <small>
+                                @if(visit.vitals.respiratoryRate)
+                                {
+                                {{ getVitalStatus('respiratoryRate', visit.vitals.respiratoryRate) }}
+                                }
+                                @else
+                                {
+                                /min
+                                }
+                            </small>
+
+                        </div>
+
+                        <div class="vital-tile" appVitalStatus="bmi" [vitalValue]="visit.vitals.bmi">
+
+                            <span class="vital-label">
+                                BMI
+                            </span>
+
+                            <strong>
+                                {{ visit.vitals.bmi || '-' }}
+                            </strong>
+
+                            <small>
+                                @if(visit.vitals.bmi)
+                                {
+                                {{ getVitalStatus('bmi', visit.vitals.bmi) }}
+                                }
+                                @else
+                                {
+                                kg/m²
+                                }
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="visit-section">
+
+                    <div class="section-heading">
+                        Prescriptions
+                    </div>
+
+                    @if(visit.prescriptions.length > 0)
+                    {
+                    <div class="prescription-list">
+
+                        @for(prescription of visit.prescriptions; track prescription.id)
+                        {
+                        <div class="prescription-card">
+
+                            <div class="prescription-main">
+
+                                <div class="medicine-name">
+                                    {{ prescription.medicineName }}
+                                </div>
+
+                                <div class="medicine-strength">
+                                    {{ prescription.strength }}
+                                </div>
+
+                            </div>
+
+                            <div class="prescription-details">
+
+                                <span>
+                                    <strong>Dosage:</strong>
+                                    {{ prescription.dosage || '-' }}
+                                </span>
+
+                                <span>
+                                    <strong>Frequency:</strong>
+                                    {{ prescription.frequency || '-' }}
+                                </span>
+
+                                <span>
+                                    <strong>Duration:</strong>
+                                    {{ prescription.durationDays || 0 }} days
+                                </span>
+
+                            </div>
+
+                            @if(prescription.instructions)
+                            {
+                            <div class="prescription-instructions">
+                                <strong>Instructions:</strong>
+                                {{ prescription.instructions }}
+                            </div>
+                            }
+
+                        </div>
+                        }
+
+                    </div>
+                    }
+                    @else
+                    {
+                    <div class="no-prescription">
+                        No prescriptions added for this visit.
+                    </div>
+                    }
+
+                </div>
+
             </div>
+            }
 
         </div>
-        }
         }
         @else
         {

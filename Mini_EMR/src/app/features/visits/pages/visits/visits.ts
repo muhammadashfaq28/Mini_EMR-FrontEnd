@@ -22,6 +22,7 @@ import {
 } from '../../store/visit.selectors';
 import { AppState } from '../../../../shared/models/app-state.model';
 import { SaveVisitRequestModel, VitalsModel } from '../../../../shared/models/visit.model';
+import { CanDeactivateComponent } from '../../../../shared/guards/can-deactivate.interface';
 
 @Component({
   selector: 'app-visits',
@@ -37,16 +38,28 @@ import { SaveVisitRequestModel, VitalsModel } from '../../../../shared/models/vi
   templateUrl: './visits.html',
   styleUrl: './visits.css'
 })
-export class Visits implements OnInit {
+export class Visits implements OnInit, CanDeactivateComponent {
   private readonly store = inject(Store<AppState>);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 
   readonly loading$ = this.store.select(selectLoading);
   readonly error$ = this.store.select(selectError);
+  hasUnsavedChanges = true;
+  isSaved = false;
 
   ngOnInit(): void {
     this.store.dispatch(VisitActions.resetVisit());
+  }
+
+  canDeactivate(): boolean {
+    if (this.isSaved || !this.hasUnsavedChanges) {
+      return true;
+    }
+
+    return confirm(
+      'You have unsaved visit changes. Are you sure you want to leave?'
+    );
   }
 
   async saveVisit(): Promise<void> {
@@ -64,24 +77,26 @@ export class Visits implements OnInit {
       firstValueFrom(this.store.select(selectPrescriptions))
     ]);
 
-    const safeVitals: VitalsModel = vitals ?? {
-      heightCm: null,
-      weightKg: null,
-      bpSystolic: null,
-      bpDiastolic: null,
-      pulseBpm: null,
-      temperatureF: null,
-      respiratoryRate: null
-    };
-
     const request: SaveVisitRequestModel = {
       appointmentId,
-      vitals: safeVitals,
       chiefComplaint,
       visitNote: notes,
       diagnosis,
+
+      heightCm: vitals?.heightCm ?? null,
+      weightKg: vitals?.weightKg ?? null,
+      bpSystolic: vitals?.bpSystolic ?? null,
+      bpDiastolic: vitals?.bpDiastolic ?? null,
+      pulseBpm: vitals?.pulseBpm ?? null,
+      temperatureC: vitals?.temperatureC ?? null,
+      respiratoryRate: vitals?.respiratoryRate ?? null,
+      bmi: vitals?.bmi ?? null,
+
       prescriptions
     };
+    
+    this.isSaved = true;
+    this.hasUnsavedChanges = false;
 
     this.store.dispatch(VisitActions.saveVisit({ request }));
   }

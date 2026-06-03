@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { LoginComponent } from './features/auth/pages/login/login';
 import { MainLayout } from './layout/main-layout/main-layout';
-
+import { pendingChangesGuard } from './shared/guards/pending-changes.guard';
 export const routes: Routes = [
 
     {
@@ -52,9 +52,16 @@ export const routes: Routes = [
             },
             {
                 path: 'visits/:appointmentId',
+                canDeactivate: [pendingChangesGuard],
                 loadComponent: () =>
                     import('./features/visits/pages/visits/visits')
                         .then(m => m.Visits)
+            },
+            {
+                path: 'settings',
+                loadComponent: () =>
+                    import('./features/settings/pages/settings/settings')
+                        .then(m => m.SettingsComponent)
             }
         ]
     },

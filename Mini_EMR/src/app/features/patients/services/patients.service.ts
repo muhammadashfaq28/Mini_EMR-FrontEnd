@@ -35,7 +35,7 @@ export class PatientsService {
   updatePatient(id: number, model: UpdatePatientRequestModel): Observable<PatientModel> {
     return this.http.put<PatientModel>(`${this.apiUrl}/${id}`, model);
   }
-  
+
   getPatientVisits(id: number): Observable<VisitHistoryModel[]> {
     return this.http.get<VisitHistoryModel[]>(`${this.apiUrl}/${id}/visits`);
   }

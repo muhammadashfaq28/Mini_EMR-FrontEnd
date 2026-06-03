@@ -16,7 +16,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { PatientsService } from '../../services/patients.service';
 import { CreatePatientRequestModel, Gender } from '../../../../shared/models/patient.model';
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { provideNativeDateAdapter, MatNativeDateModule } from "@angular/material/core";
+import { MatNativeDateModule } from "@angular/material/core";
+import { cnicValidator } from '../../../../shared/validators/cnic.validator';
 
 @Component({
   selector: 'app-add-patient-dialog',
@@ -32,7 +33,7 @@ import { provideNativeDateAdapter, MatNativeDateModule } from "@angular/material
     MatDialogContent,
     MatSnackBarModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
   ],
   templateUrl: './add-patient-dialog.html',
   styleUrl: './add-patient-dialog.css'
@@ -51,7 +52,7 @@ export class AddPatientDialog {
     lastName: ['', Validators.required],
     gender: ['', Validators.required],
     dateOfBirth: this.fb.control<Date | null>(null, Validators.required),
-    cnic: ['', Validators.required],
+    cnic: ['', [Validators.required, cnicValidator()]],
     phoneNumber: ['', Validators.required],
     bloodGroup: [''],
     address: ['']

@@ -1,0 +1,43 @@
+.settings-container {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.settings-container h2 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.settings-card {
+    padding: 20px;
+    border-radius: 16px;
+}
+
+.settings-card h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-row strong {
+    color: #334155;
+}
+
+.info-row span {
+    color: #0f172a;
+}

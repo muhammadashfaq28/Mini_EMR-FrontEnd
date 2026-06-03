@@ -10,7 +10,11 @@
 
         <!-- Height -->
 
-        <mat-form-field appearance="outline">
+        <mat-form-field
+            appearance="outline"
+            appVitalStatus="heightCm"
+            [vitalValue]="vitalsForm.get('heightCm')?.value">
+
             <mat-label>
                 Height (cm)
             </mat-label>
@@ -20,11 +24,20 @@
                 type="number"
                 formControlName="heightCm"
                 (input)="calculateBMI()">
+
+            <mat-hint>
+                Required value
+            </mat-hint>
+
         </mat-form-field>
 
         <!-- Weight -->
 
-        <mat-form-field appearance="outline">
+        <mat-form-field
+            appearance="outline"
+            appVitalStatus="weightKg"
+            [vitalValue]="vitalsForm.get('weightKg')?.value">
+
             <mat-label>
                 Weight (kg)
             </mat-label>
@@ -34,11 +47,20 @@
                 type="number"
                 formControlName="weightKg"
                 (input)="calculateBMI()">
+
+            <mat-hint>
+                Required value
+            </mat-hint>
+
         </mat-form-field>
 
         <!-- BP Systolic -->
 
-        <mat-form-field appearance="outline">
+        <mat-form-field
+            appearance="outline"
+            appVitalStatus="bpSystolic"
+            [vitalValue]="vitalsForm.get('bpSystolic')?.value">
+
             <mat-label>
                 BP Systolic
             </mat-label>
@@ -48,11 +70,20 @@
                 type="number"
                 formControlName="bpSystolic"
                 (input)="updateVitals()">
+
+            <mat-hint>
+                Normal: 90 - 120
+            </mat-hint>
+
         </mat-form-field>
 
         <!-- BP Diastolic -->
 
-        <mat-form-field appearance="outline">
+        <mat-form-field
+            appearance="outline"
+            appVitalStatus="bpDiastolic"
+            [vitalValue]="vitalsForm.get('bpDiastolic')?.value">
+
             <mat-label>
                 BP Diastolic
             </mat-label>
@@ -62,11 +93,20 @@
                 type="number"
                 formControlName="bpDiastolic"
                 (input)="updateVitals()">
+
+            <mat-hint>
+                Normal: 60 - 80
+            </mat-hint>
+
         </mat-form-field>
 
         <!-- Pulse -->
 
-        <mat-form-field appearance="outline">
+        <mat-form-field
+            appearance="outline"
+            appVitalStatus="pulseBpm"
+            [vitalValue]="vitalsForm.get('pulseBpm')?.value">
+
             <mat-label>
                 Pulse BPM
             </mat-label>
@@ -76,25 +116,43 @@
                 type="number"
                 formControlName="pulseBpm"
                 (input)="updateVitals()">
+
+            <mat-hint>
+                Normal: 60 - 100
+            </mat-hint>
+
         </mat-form-field>
 
         <!-- Temperature -->
 
-        <mat-form-field appearance="outline">
+        <mat-form-field
+            appearance="outline"
+            appVitalStatus="temperatureC"
+            [vitalValue]="vitalsForm.get('temperatureC')?.value">
+
             <mat-label>
-                Temperature °F
+                Temperature °C
             </mat-label>
 
             <input
                 matInput
                 type="number"
-                formControlName="temperatureF"
+                formControlName="temperatureC"
                 (input)="updateVitals()">
+
+            <mat-hint>
+                Normal: 36.1 - 37.2
+            </mat-hint>
+
         </mat-form-field>
 
         <!-- Respiratory Rate -->
 
-        <mat-form-field appearance="outline">
+        <mat-form-field
+            appearance="outline"
+            appVitalStatus="respiratoryRate"
+            [vitalValue]="vitalsForm.get('respiratoryRate')?.value">
+
             <mat-label>
                 Respiratory Rate
             </mat-label>
@@ -104,11 +162,20 @@
                 type="number"
                 formControlName="respiratoryRate"
                 (input)="updateVitals()">
+
+            <mat-hint>
+                Normal: 12 - 20
+            </mat-hint>
+
         </mat-form-field>
 
         <!-- BMI -->
 
-        <mat-form-field appearance="outline">
+        <mat-form-field
+            appearance="outline"
+            appVitalStatus="bmi"
+            [vitalValue]="vitalsForm.get('bmi')?.value">
+
             <mat-label>
                 BMI
             </mat-label>
@@ -117,6 +184,11 @@
                 matInput
                 formControlName="bmi"
                 readonly>
+
+            <mat-hint>
+                Normal: 18.5 - 24.9
+            </mat-hint>
+
         </mat-form-field>
 
     </form>

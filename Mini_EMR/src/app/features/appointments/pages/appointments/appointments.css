@@ -1,0 +1,85 @@
+.appointment-page {
+    height: calc(100vh - 120px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f8fafc;
+}
+
+.appointment-card {
+    background: white;
+    padding: 40px;
+    border-radius: 24px;
+    text-align: center;
+    min-width: 400px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+.appointment-icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    color: #3f51b5;
+    margin-bottom: 16px;
+}
+
+.appointment-card h2 {
+    margin: 0;
+    color: #1e293b;
+}
+
+.appointment-card p {
+    color: #64748b;
+    margin-top: 8px;
+}
+:host {
+    display: block;
+}
+
+.appointment-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    padding-top: 12px;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+mat-dialog-content {
+    padding: 24px 32px !important;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+mat-dialog-actions {
+    padding: 16px 32px 24px !important;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+h2[mat-dialog-title] {
+    margin: 0;
+    padding: 24px 24px 12px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .appointment-form {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: auto;
+    }
+}
