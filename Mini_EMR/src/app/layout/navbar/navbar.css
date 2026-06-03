@@ -1,133 +1,154 @@
-.navbar
-{
-    height: 72px;
-
-    background-color: white;
-
+.navbar {
+    height: 70px;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
-    padding: 0 24px;
-
-    border-bottom:
-        1px solid #e5e7eb;
-
-    box-shadow:
-        0 2px 10px rgba(0,0,0,0.04);
+    padding: 0 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-/* ===================== LEFT ===================== */
-
-.navbar-left
-{
+.navbar-left {
     display: flex;
-
     align-items: center;
 }
 
-.app-title
-{
-    font-size: 24px;
-
-    font-weight: 700;
-
-    color: #1e293b;
-
-    letter-spacing: 0.5px;
-}
-
-/* ===================== RIGHT ===================== */
-
-.navbar-right
-{
+.app-title {
+    font-size: 22px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff, #94a3b8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: 1px;
     display: flex;
-
-    align-items: center;
-
-    gap: 20px;
-}
-
-/* ===================== BUTTON ===================== */
-
-.appointment-btn
-{
-    height: 42px;
-
-    border-radius: 12px !important;
-
-    padding: 0 18px !important;
-
-    font-weight: 600 !important;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-}
-
-/* ===================== USER ===================== */
-
-.user-section
-{
-    display: flex;
-
-    align-items: center;
-
+    align-items: baseline;
     gap: 12px;
 }
 
-.user-avatar
-{
-    width: 42px;
-
-    height: 42px;
-
-    border-radius: 50%;
-
-    background:
-        linear-gradient(
-            135deg,
-            #2563eb,
-            #3b82f6);
-
-    color: white;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 18px;
-
-    font-weight: 700;
-}
-
-.user-details
-{
-    display: flex;
-
-    flex-direction: column;
-}
-
-.user-name
-{
-    font-size: 15px;
-
-    font-weight: 600;
-
-    color: #1e293b;
-}
-
-.user-role
-{
-    font-size: 12px;
-
-    color: #64748b;
-
+.app-subtitle {
+    font-size: 11px;
     font-weight: 500;
+    color: #94a3b8;
+    letter-spacing: 0.5px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.appointment-btn {
+    height: 42px;
+    border-radius: 12px !important;
+    padding: 0 24px !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+    color: white !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.25s ease !important;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+}
+
+.appointment-btn:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4) !important;
+}
+
+.appointment-btn mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 6px 16px 6px 12px;
+    border-radius: 50px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.user-section:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+}
+
+.user-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #f1f5f9;
+}
+
+.user-role {
+    font-size: 11px;
+    color: #94a3b8;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0 16px;
+        height: 60px;
+    }
+    
+    .app-title {
+        font-size: 16px;
+    }
+    
+    .app-subtitle {
+        display: none;
+    }
+    
+    .user-details {
+        display: none;
+    }
+    
+    .appointment-btn span {
+        display: none;
+    }
+    
+    .appointment-btn {
+        padding: 0 12px !important;
+        min-width: unset;
+    }
+    
+    .user-section {
+        padding: 4px 8px;
+    }
 }

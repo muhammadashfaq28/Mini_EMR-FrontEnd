@@ -4,21 +4,49 @@
     <form [formGroup]="appointmentForm" class="appointment-form">
 
         <!-- Patient -->
+
+        @if(isPatientLocked)
+        {
+        <div class="selected-patient-card">
+
+            <label>
+                Patient
+            </label>
+
+            <div class="patient-name">
+                {{ data.patientName }}
+            </div>
+
+        </div>
+        }
+        @else
+        {
         <mat-form-field appearance="outline">
-            <mat-label>Patient</mat-label>
+
+            <mat-label>
+                Patient
+            </mat-label>
+
             <mat-select formControlName="patientId">
+
                 <mat-option>
                     <ngx-mat-select-search [(ngModel)]="patientSearch" [ngModelOptions]="{ standalone: true }"
                         placeholderLabel="Search patient" (keyup)="onPatientSearch()">
                     </ngx-mat-select-search>
                 </mat-option>
-                @for(patient of filteredPatients(); track patient.id) {
+
+                @for(patient of filteredPatients(); track patient.id)
+                {
                 <mat-option [value]="patient.id">
-                    {{ patient.firstName }} {{ patient.lastName }}
+                    {{ patient.firstName }}
+                    {{ patient.lastName }}
                 </mat-option>
                 }
+
             </mat-select>
+
         </mat-form-field>
+        }
 
         <!-- Doctor -->
         <mat-form-field appearance="outline">

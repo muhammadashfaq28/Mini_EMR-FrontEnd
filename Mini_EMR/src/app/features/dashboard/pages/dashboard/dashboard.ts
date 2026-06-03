@@ -16,7 +16,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { provideNativeDateAdapter } from '@angular/material/core';
-
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { DestroyRef } from '@angular/core';
 import { DashboardService } from '../../services/dashboard.service';
 import { AuthService } from '../../../../core/services/auth.service';
 
@@ -70,6 +71,7 @@ export class Dashboard implements OnInit {
   private readonly dashboardService = inject(DashboardService);
   readonly authService = inject(AuthService);
   readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
 
   appointments = signal<DashboardAppointmentModel[]>([]);
   statusCounts = signal<DashboardStatusCountsModel | null>(null);
@@ -89,6 +91,11 @@ export class Dashboard implements OnInit {
 
   ngOnInit(): void {
     this.refreshDashboard();
+    this.dashboardService.appointmentCreated$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.refreshDashboard();
+      });
   }
 
   loadDashboardData(): void {

@@ -458,3 +458,20 @@ mat-card {
 .vital-tile.vital-field-abnormal small {
     color: #991b1b !important;
 }
+.patient-header button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    height: 44px;
+
+    border-radius: 12px !important;
+
+    font-weight: 600;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,.15);
+}
+
+.patient-header button mat-icon {
+    margin-right: 4px;
+}

@@ -16,9 +16,18 @@
 
                 <p>
                     {{ patient()?.gender }} · {{ patient()?.dateOfBirth | age }}
-                
                 </p>
             </div>
+
+            <button mat-raised-button color="accent" (click)="bookAppointment()">
+
+                <mat-icon>
+                    event
+                </mat-icon>
+
+                Book Appointment
+
+            </button>
 
         </div>
 

@@ -44,6 +44,12 @@
         <mat-form-field appearance="outline">
             <mat-label>Phone Number</mat-label>
             <input matInput formControlName="phoneNumber">
+            @if(patientForm.get('phoneNumber')?.hasError('invalidPhoneNumber'))
+            {
+            <mat-error>
+                Phone number must be 11 digits and start with 03
+            </mat-error>
+            }
         </mat-form-field>
 
         <mat-form-field appearance="outline">

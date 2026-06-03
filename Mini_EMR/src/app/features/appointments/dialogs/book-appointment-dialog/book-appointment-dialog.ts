@@ -10,7 +10,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-
+import { Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AppointmentService, BookAppointmentRequestModel } from '../../services/appointment.service';
 import { PatientModel } from '../../../../shared/models/patient.model';
 import { UserModel } from '../../../../shared/models/user.model';
@@ -43,7 +44,17 @@ export class BookAppointmentDialog implements OnInit {
   private readonly snackBar = inject(MatSnackBar);
   private readonly cdr = inject(ChangeDetectorRef);
 
+  constructor(
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      patientId?: number;
+      patientName?: string;
+    }
+  ) { }
+
+  isPatientLocked = false;
   isSaving = false;
+
 
   patients = signal<PatientModel[]>([]);
   doctors = signal<UserModel[]>([]);
@@ -54,16 +65,25 @@ export class BookAppointmentDialog implements OnInit {
   doctorSearch = '';
 
   appointmentForm = this.fb.group({
-    patientId: ['', Validators.required],
-    doctorId: ['', Validators.required],
+    patientId: [null as number | null, Validators.required],
+    doctorId: [null as number | null, Validators.required],
     appointmentDate: ['', Validators.required],
     appointmentTime: ['', Validators.required],
     notes: ['']
   });
 
   ngOnInit(): void {
+
     this.loadPatients();
     this.loadDoctors();
+
+    if (this.data?.patientId) {
+
+      this.isPatientLocked = true;
+      this.appointmentForm.patchValue({
+        patientId: this.data.patientId
+      });
+    }
   }
 
   loadPatients(): void {

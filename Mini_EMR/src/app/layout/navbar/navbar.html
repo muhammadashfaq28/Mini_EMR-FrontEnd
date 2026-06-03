@@ -1,55 +1,27 @@
 <mat-toolbar class="navbar">
 
-    <!-- ===================== LEFT ===================== -->
-
     <div class="navbar-left">
-
         <div class="app-title">
-            Smart Clinic Management System
+            MiniEMR
+            <span class="app-subtitle">Smart Clinic Management</span>
         </div>
-
     </div>
-
-    <!-- ===================== RIGHT ===================== -->
 
     <div class="navbar-right">
 
-        <!-- BOOK APPOINTMENT -->
-
         <button mat-raised-button color="primary" class="appointment-btn" (click)="openBookAppointment()">
-
             <mat-icon>add</mat-icon>
-
             Book Appointment
-
         </button>
 
-        <!-- USER INFO -->
-
         <div class="user-section">
-
             <div class="user-avatar">
-
                 {{ authService.getFullName()?.charAt(0) }}
-
             </div>
-
             <div class="user-details">
-
-                <div class="user-name">
-
-                    {{ authService.getFullName() }}
-
-                </div>
-
-                <div class="user-role">
-
-                    {{ authService.getRole() }}
-
-                </div>
-
+                <div class="user-name">{{ authService.getFullName() }}</div>
+                <div class="user-role">{{ authService.getRole() }}</div>
             </div>
-
         </div>
 
     </div>

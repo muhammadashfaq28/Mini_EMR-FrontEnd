@@ -6,6 +6,8 @@ import { AuthService } from '../../core/services/auth.service';
 import { BookAppointmentDialog } from '../../features/appointments/dialogs/book-appointment-dialog/book-appointment-dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
+import { DashboardService } from '../../features/dashboard/services/dashboard.service';
 
 @Component({
   selector: 'app-navbar',
@@ -24,6 +26,17 @@ export class Navbar {
   authService = inject(AuthService);
   private dialog = inject(MatDialog);
   private router = inject(Router);
+  private dashboardService = inject(DashboardService);
+
+  private readonly appointmentCreatedSubject =
+    new Subject<void>();
+
+  appointmentCreated$ =
+    this.appointmentCreatedSubject.asObservable();
+
+  notifyAppointmentCreated(): void {
+    this.appointmentCreatedSubject.next();
+  }
 
   openBookAppointment(): void {
     const dialogRef =
@@ -38,7 +51,7 @@ export class Navbar {
     dialogRef.afterClosed()
       .subscribe(result => {
         if (result) {
-          window.location.reload();
+          this.dashboardService.notifyAppointmentCreated();
         }
       });
   }

@@ -3,7 +3,8 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-
+import { MatDialog } from '@angular/material/dialog';
+import { BookAppointmentDialog } from '../../../appointments/dialogs/book-appointment-dialog/book-appointment-dialog';
 import { PatientsService } from '../../services/patients.service';
 import { DashboardService } from '../../../dashboard/services/dashboard.service';
 import { PatientModel } from '../../../../shared/models/patient.model';
@@ -11,6 +12,7 @@ import { VisitHistoryModel } from '../../../../shared/models/visit.model';
 import { VitalStatusDirective } from '../../../../shared/directives/vital-status-directive';
 import { BmiPipe } from "../../../../shared/pipes/bmi.pipe";
 import { AgePipe } from "../../../../shared/pipes/age.pipe";
+import { MatButtonModule } from '@angular/material/button';
 
 type AppointmentStatus = 'Booked' | 'CheckedIn' | 'Completed' | 'Cancelled';
 
@@ -28,7 +30,7 @@ interface PatientAppointmentModel {
 @Component({
   selector: 'app-patient-detail',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatIconModule, VitalStatusDirective, BmiPipe, AgePipe],
+  imports: [CommonModule, MatCardModule, MatIconModule, VitalStatusDirective, BmiPipe, AgePipe, MatButtonModule],
   templateUrl: './patient-detail.html',
   styleUrl: './patient-detail.css'
 })
@@ -36,6 +38,7 @@ export class PatientDetail implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly patientsService = inject(PatientsService);
   private readonly dashboardService = inject(DashboardService);
+  private readonly dialog = inject(MatDialog);
 
   patient = signal<PatientModel | null>(null);
   activeAppointment = signal<PatientAppointmentModel | null>(null);
@@ -128,6 +131,28 @@ export class PatientDetail implements OnInit {
       default:
         return true;
     }
+  }
+
+  bookAppointment(): void {
+
+    const patient = this.patient();
+
+    if (!patient) {
+      return;
+    }
+
+    this.dialog.open(
+      BookAppointmentDialog,
+      {
+        width: '95%',
+        maxWidth: '800px',
+        disableClose: true,
+        data: {
+          patientId: patient.id,
+          patientName: `${patient.firstName} ${patient.lastName}`
+        }
+      }
+    );
   }
 
 }

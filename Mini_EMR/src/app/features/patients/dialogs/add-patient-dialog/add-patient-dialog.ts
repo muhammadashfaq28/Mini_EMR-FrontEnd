@@ -18,6 +18,7 @@ import { CreatePatientRequestModel, Gender } from '../../../../shared/models/pat
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule } from "@angular/material/core";
 import { cnicValidator } from '../../../../shared/validators/cnic.validator';
+import { phoneNumberValidator } from '../../../../shared/validators/phone-number.validator';
 
 @Component({
   selector: 'app-add-patient-dialog',
@@ -53,7 +54,7 @@ export class AddPatientDialog {
     gender: ['', Validators.required],
     dateOfBirth: this.fb.control<Date | null>(null, Validators.required),
     cnic: ['', [Validators.required, cnicValidator()]],
-    phoneNumber: ['', Validators.required],
+    phoneNumber: ['', [Validators.required, phoneNumberValidator()]],
     bloodGroup: [''],
     address: ['']
   });
